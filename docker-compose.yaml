@@ -1,28 +1,28 @@
 services:
   app:
     image: ambientum/php:8.1-nginx
-    container_name: mecanica-app
+    container_name: modularis-app
     volumes:
       - .:/var/www/app
     ports:
       - 80:8080
       - 443:8083
     networks:
-      - mecanica
+      - modularis
 
   postgres:
     image: postgres:11
-    container_name: mecanica-db
+    container_name: modularis-db
     volumes:
       - ./postgres:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_DB=mecanica
-      - POSTGRES_USER=mecanica
+      - POSTGRES_DB=modularis
+      - POSTGRES_USER=modularis
       - POSTGRES_HOST_AUTH_METHOD=trust
     networks:
-      - mecanica
+      - modularis
 
 networks:
-  mecanica:
+  modularis:
