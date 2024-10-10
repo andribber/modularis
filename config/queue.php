@@ -71,6 +71,14 @@ return [
             'after_commit' => false,
         ],
 
+        'central' => [
+            'driver' => 'redis',
+            'connection' => 'default',
+            'queue' => 'central',
+            'retry_after' => 90,
+            'central' => true,
+        ],
+
     ],
 
     /*

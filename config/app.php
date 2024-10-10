@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Modularis'),
 
     /*
     |--------------------------------------------------------------------------
@@ -71,6 +71,10 @@ return [
     */
 
     'timezone' => 'UTC',
+
+    'user_timezone' => 'America/Sao_Paulo',
+
+    'schedule_timezone' => 'America/Sao_Paulo',
 
     /*
     |--------------------------------------------------------------------------
@@ -167,7 +171,9 @@ return [
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
+        App\Providers\HorizonServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\TelescopeServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -184,5 +190,12 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
+
+    'pagination_limit' => (int) env('APP_DEFAULT_PAGE_SIZE', 25),
+
+    'rate_limit' => [
+        'api' => (int) env('RATE_LIMIT_API', 60),
+        'login' => (int) env('RATE_LIMIT_LOGIN', 5),
+    ],
 
 ];
