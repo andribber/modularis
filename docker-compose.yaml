@@ -1,3 +1,12 @@
+name: modularis
+
+volumes:
+  postgres-data:
+    driver: local
+
+  redis-data:
+    driver: local
+
 services:
   app:
     image: ambientum/php:8.1-nginx
@@ -7,22 +16,68 @@ services:
     ports:
       - 80:8080
       - 443:8083
+    links:
+      - mailpit
+      - postgres
+    depends_on:
+      - mailpit
+      - postgres
+      - queue
     networks:
-      - modularis
+      modularis:
+        aliases:
+          - app
 
   postgres:
-    image: postgres:11
+    image: postgres:14.7-alpine
     container_name: modularis-db
     volumes:
-      - ./postgres:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_DB=modularis
-      - POSTGRES_USER=modularis
-      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_DB=modularis_pgdb
+      - POSTGRES_PASSWORD=pgpwd
+      - POSTGRES_USER=pguser
     networks:
-      - modularis
+      modularis:
+        aliases:
+          - database
+
+  redis:
+    image: redis:7.0-alpine
+    container_name: modularis-redis
+    volumes:
+      - redis-data:/data
+    networks:
+      modularis:
+        aliases:
+          - redis
+
+  queue:
+    image: ambientum/php:8.1
+    container_name: modularis-queue
+    command: sh -c "composer install"
+    volumes:
+      - .:/var/www/app
+    links:
+      - redis
+      - postgres
+    depends_on:
+      - redis
+      - postgres
+    networks:
+      modularis:
+        aliases:
+          - queue
+
+  mailpit:
+    image: axllent/mailpit:v1.9
+    container_name: modularis-mailpit
+    networks:
+      modularis:
+        aliases:
+          - mailpit
 
 networks:
   modularis:
