@@ -191,4 +191,11 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+    'pagination_limit' => (int) env('APP_DEFAULT_PAGE_SIZE', 25),
+
+    'rate_limit' => [
+        'api' => (int) env('RATE_LIMIT_API', 60),
+        'login' => (int) env('RATE_LIMIT_LOGIN', 5),
+    ],
+
 ];
