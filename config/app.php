@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Modularis'),
 
     /*
     |--------------------------------------------------------------------------
@@ -71,6 +71,10 @@ return [
     */
 
     'timezone' => 'UTC',
+
+    'user_timezone' => 'America/Sao_Paulo',
+
+    'schedule_timezone' => 'America/Sao_Paulo',
 
     /*
     |--------------------------------------------------------------------------
@@ -167,6 +171,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
+        App\Providers\HorizonServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
     ])->toArray(),
 
