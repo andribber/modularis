@@ -15,5 +15,7 @@ class TenantUserQuery extends QueryBuilder
             'user',
             'tenant',
         ]);
+
+        $this->defaultSorts('-id');
     }
 }

@@ -10,5 +10,7 @@ class TenantQuery extends QueryBuilder
     public function __construct()
     {
         parent::__construct(Tenant::query());
+
+        $this->defaultSorts('-id');
     }
 }
