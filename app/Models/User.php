@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\User\Created;
 use App\Traits\InteractsWithObject;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -37,6 +38,10 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         'data',
         'password',
         'remember_token',
+    ];
+
+    protected $dispatchesEvents = [
+        'created' => Created::class,
     ];
 
     public function tenants(): BelongsToMany
