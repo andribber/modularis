@@ -40,14 +40,16 @@ class TenantPolicy
         return $tenant->is($user->tenants()->wherePivot('tenant_id', $tenant->id)->first());
     }
 
-    public function attachUser(User $user): bool
+    public function attachUser(User $user, Tenant $tenant): bool
     {
-        return true;
+        return ($tenant->isOwner($user) || $tenant->isAdmin($user))
+            && ! $tenant->has_personal
+            && $tenant->is($user->tenants()->wherePivot('tenant_id', $tenant->id)->first());
     }
 
     public function updateRole(User $currentUser, Tenant $tenant, User $user): bool
     {
-        return ($tenant->isPersonal($currentUser) || $tenant->isOwner($currentUser) || $tenant->isAdmin($currentUser))
+        return ($tenant->isOwner($currentUser) || $tenant->isAdmin($currentUser))
             && ! $tenant->isPersonal($user)
             && ! $tenant->isOwner($user)
             && $tenant->is($currentUser->tenants()->wherePivot('tenant_id', $tenant->id)->first());
@@ -55,7 +57,7 @@ class TenantPolicy
 
     public function detachUser(User $currentUser, Tenant $tenant, User $user): bool
     {
-        return ($tenant->isPersonal($currentUser) || $tenant->isOwner($currentUser) || $tenant->isAdmin($currentUser))
+        return ($tenant->isOwner($currentUser) || $tenant->isAdmin($currentUser))
             && ! $tenant->isPersonal($user)
             && ! $tenant->isOwner($user)
             && $tenant->is($currentUser->tenants()->wherePivot('tenant_id', $tenant->id)->first());

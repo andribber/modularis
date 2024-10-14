@@ -33,7 +33,7 @@ class TenantUserController
 
     public function updateRole(UpdateRoleRequest $request, Tenant $tenant, User $user): JsonResource
     {
-        $this->authorize('updateRole', [$tenant, $user]);
+        $this->authorize('updateRole', [Tenant::class, $tenant, $user]);
 
         $tenantUser = TenantUser::where('user_id', $user->id)
             ->where('tenant_id', $tenant->id)
@@ -46,7 +46,7 @@ class TenantUserController
 
     public function attach(TenantUserQuery $query, AttachUserRequest $request, Tenant $tenant): JsonResponse
     {
-        $this->authorize('attachUser', [Tenant::class]);
+        $this->authorize('attachUser', [Tenant::class, $tenant]);
 
         $userIds = [];
 
@@ -66,7 +66,7 @@ class TenantUserController
 
     public function detach(Tenant $tenant, User $user): JsonResponse
     {
-        $this->authorize('detachUser', [$tenant, $user]);
+        $this->authorize('detachUser', [Tenant::class, $tenant, $user]);
 
         $tenant->users()->detach($user);
 
