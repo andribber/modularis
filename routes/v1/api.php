@@ -36,6 +36,11 @@ $router->name('v1.')->group(function (Router $router) use ($loginLimiter) {
                 $router->get('/', [TenantController::class, 'show'])->name('tenants.show');
                 $router->put('/', [TenantController::class, 'update'])->name('tenants.update');
                 $router->delete('/', [TenantController::class, 'delete'])->name('tenants.delete');
+
+                $router->group(['prefix' => '/tokens'], function (Router $router) {
+                    $router->get('/', [TokenController::class, 'index'])->name('tenants.tokens.index');
+                    $router->post('/', [TokenController::class, 'store'])->name('tenants.tokens.store');
+                });
             });
         });
     });
