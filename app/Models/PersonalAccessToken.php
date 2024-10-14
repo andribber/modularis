@@ -25,6 +25,7 @@ class PersonalAccessToken extends Model
     protected $fillable = [
         'created_at',
         'expires_at',
+        'id',
         'name',
         'tenant_user_id',
         'token',
