@@ -12,6 +12,7 @@ return new class extends Migration
             $table->primaryUlid('usr');
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('document')->unique();
             $table->string('password');
             $table->rememberToken();
             $table->timestamp('email_verified_at')->nullable();

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Contracts\Authenticable;
 use App\Events\User\Created;
 use App\Traits\InteractsWithObject;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements JWTSubject, MustVerifyEmail
+class User extends Authenticatable implements Authenticable, JWTSubject, MustVerifyEmail
 {
     use HasFactory;
     use InteractsWithObject;
@@ -27,6 +28,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 
     protected $fillable = [
         'data',
+        'document',
         'email',
         'email_verified_at',
         'name',
