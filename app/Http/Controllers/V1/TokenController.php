@@ -2,24 +2,20 @@
 
 namespace App\Http\Controllers\V1;
 
-use App\Enums\Role;
+use App\Actions\Authentication\Login;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Token\LoginRequest;
+use App\Http\Requests\Token\RegisterRequest;
 use App\Http\Resources\PersonalAccessTokenResource;
-use App\Models\PersonalAccessToken;
-use App\Models\TenantUser;
 use App\Models\User;
-use App\Services\TokenService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Namshi\JOSE\SimpleJWS;
 use Symfony\Component\HttpFoundation\Response;
 
 class TokenController extends Controller
 {
     public function __construct(
         private readonly User $user,
-        private readonly TenantUser $tenantUser,
     ) {
     }
 
@@ -34,22 +30,8 @@ class TokenController extends Controller
 
         if (auth()->validate($credentials)) {
             $user = $this->user->where('email', $credentials['email'])->first();
-            $userOwnTenant = $this->tenantUser
-                ->where('user_id', $user->id)
-                ->where('role', Role::PERSONAL)
-                ->first();
-            $service = new TokenService($userOwnTenant);
-            $token = $service->token();
-            $payload = SimpleJWS::load($token)->getPayload();
 
-            $personalAccessToken = $this->createToken(
-                $userOwnTenant,
-                $payload,
-                $request->header('User-Agent') ?? '',
-                'web_login',
-            );
-
-            $personalAccessToken->token = $token;
+            $personalAccessToken = Login::run($user, $request->header('User-Agent') ?? '');
 
             return new PersonalAccessTokenResource($personalAccessToken);
         }
@@ -64,17 +46,12 @@ class TokenController extends Controller
         return response()->json(status: Response::HTTP_NO_CONTENT);
     }
 
-    private function createToken(
-        TenantUser $tenantUser,
-        array $payload,
-        string $userAgent,
-        string $name,
-    ): PersonalAccessToken {
-        return $tenantUser->tokens()->create([
-            'id' => $payload['jti'],
-            'expires_at' => $payload['exp'],
-            'user_agent' => $userAgent,
-            'name' => $name,
-        ]);
+    public function register(RegisterRequest $request): JsonResource
+    {
+        $user = $this->user->create($request->validated());
+
+        $personalAccessToken = Login::run($user, $request->header('User-Agent') ?? '');
+
+        return new PersonalAccessTokenResource($personalAccessToken);
     }
 }
