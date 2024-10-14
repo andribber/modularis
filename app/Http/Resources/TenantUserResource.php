@@ -10,9 +10,9 @@ class TenantUserResource extends JsonResource
     {
         return [
             'created_at' => $this->created_at,
-            'document' => $this->document,
+            'document' => $this->user->document,
             'id' => $this->id,
-            'name' => $this->name,
+            'name' => $this->user->name,
             'role' => $this->role,
             'updated_at' => $this->updated_at,
         ];
