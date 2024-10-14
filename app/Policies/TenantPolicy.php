@@ -53,7 +53,7 @@ class TenantPolicy
             && $tenant->is($currentUser->tenants()->wherePivot('tenant_id', $tenant->id)->first());
     }
 
-    public function detachAccount(User $currentUser, Tenant $tenant, User $user): bool
+    public function detachUser(User $currentUser, Tenant $tenant, User $user): bool
     {
         return ($tenant->isPersonal($currentUser) || $tenant->isOwner($currentUser) || $tenant->isAdmin($currentUser))
             && ! $tenant->isPersonal($user)

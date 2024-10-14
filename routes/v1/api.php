@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\V1\PingController;
 use App\Http\Controllers\V1\TenantController;
+use App\Http\Controllers\V1\TenantUserController;
 use App\Http\Controllers\V1\TokenController;
 use App\Http\Controllers\V1\UserController;
 use Illuminate\Routing\Router;
@@ -40,6 +41,18 @@ $router->name('v1.')->group(function (Router $router) use ($loginLimiter) {
                 $router->group(['prefix' => '/tokens'], function (Router $router) {
                     $router->get('/', [TokenController::class, 'index'])->name('tenants.tokens.index');
                     $router->post('/', [TokenController::class, 'store'])->name('tenants.tokens.store');
+                });
+
+                $router->group(['prefix' => '/users'], function (Router $router) {
+                    $router->get('/', [TenantUserController::class, 'index'])->name('tenants.users.index');
+                    $router->post('/', [TenantUserController::class, 'attach'])->name('tenants.users.attach');
+
+                    $router->group(['prefix' => '/{user}'], function (Router $router) {
+                        $router->patch('/', [TenantUserController::class, 'updateRole'])
+                            ->name('tenants.users.role.update');
+                        $router->delete('/', [TenantUserController::class, 'detach'])
+                            ->name('tenants.users.detach');
+                    });
                 });
             });
         });
