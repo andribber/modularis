@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\ForceJsonResponse;
+use App\Http\Middleware\JwtMiddleware;
 use App\Http\Middleware\NoopMiddleware;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
 use App\Http\Middleware\TrimStrings;
@@ -68,5 +69,6 @@ class Kernel extends HttpKernel
         'password.confirm' => RequirePassword::class,
         'signed' => ValidateSignature::class,
         'verified' => EnsureEmailIsVerified::class,
+        'jwt' => JwtMiddleware::class,
     ];
 }
