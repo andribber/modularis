@@ -34,16 +34,16 @@ class TokenController extends Controller
 
         if (auth()->validate($credentials)) {
             $user = $this->user->where('email', $credentials['email'])->first();
-            $accountOwnTenant = $this->tenantUser
-                ->where('account_id', $user->id)
+            $userOwnTenant = $this->tenantUser
+                ->where('user_id', $user->id)
                 ->where('role', Role::PERSONAL)
                 ->first();
-            $service = new TokenService($accountOwnTenant);
+            $service = new TokenService($userOwnTenant);
             $token = $service->token();
             $payload = SimpleJWS::load($token)->getPayload();
 
             $personalAccessToken = $this->createToken(
-                $accountOwnTenant,
+                $userOwnTenant,
                 $payload,
                 $request->header('User-Agent') ?? '',
                 'web_login',
