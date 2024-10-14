@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('tenants', function (Blueprint $table) {
             $table->primaryUlid('ten');
             $table->string('name');
-            $table->json('data');
+            $table->json('data')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
