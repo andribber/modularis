@@ -106,6 +106,6 @@ return [
     |
     */
 
-    'prefix' => env('REDIS_PREFIX', Str::slug(config('app.name'), '_') . '_cache_'),
+    'prefix' => env('REDIS_PREFIX', Str::slug(config('app.name'), '_').'_cache_'),
 
 ];
