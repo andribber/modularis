@@ -1,8 +1,8 @@
 <?php
 
-use Laravel\Sanctum\Http\Middleware\AuthenticateSession;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\VerifyCsrfToken;
+use Laravel\Sanctum\Http\Middleware\AuthenticateSession;
 use Laravel\Sanctum\Sanctum;
 
 return [

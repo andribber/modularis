@@ -1,8 +1,9 @@
 <?php
 
-use Tymon\JWTAuth\Providers\JWT\Provider;
-use Tymon\JWTAuth\Providers\JWT\Lcobucci;
 use Tymon\JWTAuth\Providers\Auth\Illuminate;
+use Tymon\JWTAuth\Providers\JWT\Lcobucci;
+use Tymon\JWTAuth\Providers\JWT\Provider;
+
 /*
  * This file is part of jwt-auth.
  *
