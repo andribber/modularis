@@ -31,6 +31,6 @@ class TokenService
             return $token->refresh();
         }
 
-        return $token->login($this->tenantUser->account);
+        return $token->login($this->tenantUser->user);
     }
 }

@@ -9,8 +9,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('personal_access_tokens', function (Blueprint $table) {
-            $table->primaryUlid('ten');
+            $table->primaryUlid('pat');
             $table->string('name');
+            $table->string('user_agent');
 
             $table->foreignPrefixedUlid('tenant_user_id')->constrained('tenant_user')->onDelete('cascade');
 

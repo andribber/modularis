@@ -13,7 +13,7 @@ class CreateRequest extends FormRequest
         return [
             'expiration_date' => ['integer', 'gte:'.now()->addMinutes(30)->timestamp],
             'name' => ['nullable', 'string'],
-            'refresh' => ['boolean'],
+            'refresh' => ['sometimes', 'boolean'],
         ];
     }
 
@@ -21,9 +21,7 @@ class CreateRequest extends FormRequest
     {
         $data = parent::validated();
 
-        $name = $data['name'] ?? null;
-
-        if (is_null($name)) {
+        if (is_null($data['name'] ?? null)) {
             $data['name'] = self::WEB_LOGIN;
         }
 
