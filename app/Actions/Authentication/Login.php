@@ -43,14 +43,10 @@ class Login
 
     private function getTenantUser(Authenticable $authenticable): TenantUser
     {
-        if ($authenticable instanceof TenantUser) {
-            return $authenticable;
+        return match($autenticable::class) {
+            TenantUser::class => $authenticable;
+            User::class => $authenticable->tenants()->where('role', EnumsRole::PERSONAL)->withPivot('id')->first()->pivot;
+            default => throw new Exception('Error while trying to login an unknown authenticable');
         }
-
-        if ($authenticable instanceof User) {
-            return $authenticable->tenants()->where('role', EnumsRole::PERSONAL)->withPivot('id')->first()->pivot;
-        }
-
-        throw new Exception('Error while trying to login an unknown authenticable');
     }
 }
