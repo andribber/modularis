@@ -52,4 +52,12 @@ class Tenant extends Model
             ->withTimestamps()
             ->withPivot('role');
     }
+
+    public function verifyPermissions(string $moduleClass): bool
+    {
+        return $this->modules()
+            ->where('class', $moduleClass)
+            ->accessible()
+            ->exists();
+    }
 }

@@ -12,7 +12,7 @@ class ModuleProxy
     ) {
     }
 
-    public function findModule(string $moduleClass): ModuleContract
+    public function getModule(string $moduleClass): ModuleContract
     {
         return match ($moduleClass) {
             FinantialModule::class => $this->finantial,
