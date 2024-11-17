@@ -2,7 +2,7 @@
 
 namespace App\Listeners\User\Created;
 
-use App\Enums\Role;
+use App\Enums\Tenant\Role;
 use App\Events\User\Created;
 use App\Models\Tenant;
 
