@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\V1\PingController;
 use App\Http\Controllers\V1\TokenController;
+use App\Http\Controllers\V1\UserController;
 use Illuminate\Routing\Router;
 
 /* @var $router Router */
@@ -19,7 +20,9 @@ $router->name('v1.')->group(function (Router $router) use ($loginLimiter) {
         });
     });
 
-    $router->middleware('jwt')->group(function (Router $router) {
+    $router->middleware('api')->group(function (Router $router) {
         $router->get('/logout', [TokenController::class, 'logout'])->name('logout');
+
+        $router->get('/me', [UserController::class, 'show'])->name('me');
     });
 });
