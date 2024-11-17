@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Contracts\Authenticable;
-use App\Enums\Role;
+use App\Enums\Tenant\Role;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
