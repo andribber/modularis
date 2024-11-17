@@ -36,7 +36,7 @@ class RouteServiceProvider extends ServiceProvider
         foreach (config('app.rate_limit') as $group => $value) {
             RateLimiter::for(
                 $group,
-                fn(Request $request) => Limit::perMinute($value)
+                fn (Request $request) => Limit::perMinute($value)
                     ->by($request->user()?->id ?? $request->ip()),
             );
         }

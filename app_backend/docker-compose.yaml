@@ -79,5 +79,17 @@ services:
         aliases:
           - mailpit
 
+  adminer:
+    image: adminer:4-standalone
+    container_name: modularis-adminer
+    ports:
+      - 9090:8080
+    depends_on:
+      - postgres
+    networks:
+      modularis:
+        aliases:
+          - adminer
+
 networks:
   modularis:

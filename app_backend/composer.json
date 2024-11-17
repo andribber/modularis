@@ -16,6 +16,7 @@
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^3.5",
         "namshi/jose": "^7.2",
+        "spatie/laravel-query-builder": "^5.7",
         "tymon/jwt-auth": "^2.1"
     },
     "require-dev": {
