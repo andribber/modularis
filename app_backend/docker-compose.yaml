@@ -1,4 +1,4 @@
-name: modularis
+name: backend
 
 volumes:
   postgres-data:
@@ -8,9 +8,9 @@ volumes:
     driver: local
 
 services:
-  app:
+  api:
     image: ambientum/php:8.1-nginx
-    container_name: modularis-app
+    container_name: modularis-api
     volumes:
       - .:/var/www/app
     ports:
@@ -26,7 +26,7 @@ services:
     networks:
       modularis:
         aliases:
-          - app
+          - web
 
   postgres:
     image: postgres:14.7-alpine

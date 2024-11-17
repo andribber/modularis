@@ -1,0 +1,32 @@
+name: frontend
+
+services:
+  npm:
+    image: node:20-alpine
+    container_name: modularis-npm
+    working_dir: /usr/local/src
+    entrypoint: npm
+    command: install
+    volumes:
+      - ./:/usr/local/src
+
+  app:
+    image: node:20-alpine
+    container_name: modularis-app
+    working_dir: /usr/local/src
+    command: npm run dev
+    environment:
+      - NODE_ENV=development
+    networks:
+      modularis:
+        aliases:
+          - web
+    volumes:
+      - ./:/usr/local/src
+    ports:
+      - 5173:5173
+      - 4173:4173
+
+networks:
+  modularis:
+    external: true
