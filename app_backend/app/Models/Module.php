@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use App\Enums\ModuleRoles;
+use App\Enums\Module\ModuleRoles;
+use App\Enums\Module\Name;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -22,6 +23,7 @@ class Module extends Model
     ];
 
     protected $casts = [
+        'name' => Name::class,
         'created_at' => 'timestamp',
         'updated_at' => 'timestamp',
     ];
@@ -41,21 +43,22 @@ class Module extends Model
         return $this->belongsToMany(User::class);
     }
 
-    public function userModule(): HasMany
+    public function moduleUser(): HasMany
     {
-        return $this->hasMany(UserModule::class);
+        return $this->hasMany(ModuleUser::class);
     }
 
     public function canBeAccessedBy(User $user, Tenant $tenant): bool
     {
         return $this->whereHas(
-            'userModule',
-            fn (Builder $query) => $query->whereBelongsTo($user->id)->whereIn('role', ModuleRoles::values()),
+            'moduleUser',
+            fn (Builder $query) => $query->whereBelongsTo($user)->whereIn('module_user.role', ModuleRoles::values()),
         )
         ->whereHas(
             'moduleTenant',
-            fn (Builder $query) => $query->whereBelongsTo($tenant)->where('expires_at', '>=', now()),
-        );
+            fn (Builder $query) => $query->whereBelongsTo($tenant)->where('module_tenant.expires_at', '>=', now()->timestamp),
+        )
+        ->dd();
     }
 
     public function scopeAccessible(Builder $query): Builder

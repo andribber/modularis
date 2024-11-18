@@ -3,17 +3,17 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Queries\Modules\ModuleQuery;
-use App\Http\Queries\UserModuleQuery;
+use App\Http\Queries\ModuleQuery;
+use App\Http\Queries\ModuleUserQuery;
 use App\Http\Requests\Modules\AttachUserRequest;
 use App\Http\Requests\Modules\ContractRequest;
 use App\Http\Resources\ModuleResource;
-use App\Http\Resources\UserModuleResource;
+use App\Http\Resources\ModuleUserResource;
 use App\Models\Module;
 use App\Models\Tenant;
 use App\Models\ModuleTenant;
 use App\Services\Modules\Infrastructure\ModuleProxy;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -33,7 +33,7 @@ class ModuleController extends Controller
         $this->authorize('view', $tenant);
         
         return ModuleResource::collection(
-            $query->whereHas('tenants', fn (Builder $query) => $query->where('id', $tenant->id))
+            $query->whereHas('tenants', fn (Builder $query) => $query->where('tenants.id', $tenant->id))
                 ->simplePaginate($request->get('limit', config('app.pagination_limit')))
         );
     }
@@ -43,8 +43,8 @@ class ModuleController extends Controller
         $this->authorize('view', $tenant);
         
         return ModuleResource::make(
-            $query->where('id', $module->id)
-                ->whereHas('tenants', fn (Builder $query) => $query->where('id', $tenant->id))
+            $query->where('modules.id', $module->id)
+                ->whereHas('tenants', fn (Builder $query) => $query->where('tenants.id', $tenant->id))
                 ->first()
         );
     }
@@ -61,13 +61,13 @@ class ModuleController extends Controller
         return response()->json(status: 204);
     }
 
-    public function attachUser(
+    public function attachUsers(
         AttachUserRequest $request,
-        UserModuleQuery $query,
+        ModuleUserQuery $query,
         Tenant $tenant,
         Module $module
     ): JsonResponse {
-        $this->authorize('attachUsers', ModuleTenant::class, [$tenant, $module]);
+        $this->authorize('attachUsers', [ModuleTenant::class, $tenant, $module]);
 
         $userIds = [];
 
@@ -76,7 +76,7 @@ class ModuleController extends Controller
             $module->users()->attach($member['user_id'], ['role' => $member['role']]);
         }
 
-        return UserModuleResource::collection(
+        return ModuleUserResource::collection(
             $query->where('module_id', $module->id)
                 ->whereIn('user_id', $userIds)
                 ->simplePaginate($request->get('limit', config('app.pagination_limit')))

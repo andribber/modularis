@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Modules;
 
-use App\Enums\ModuleRoles;
+use App\Enums\Module\ModuleRoles;
 use App\Models\User;
 use App\Rules\UserIsAttachedToTenant;
 use Illuminate\Foundation\Http\FormRequest;

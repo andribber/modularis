@@ -2,16 +2,20 @@
 
 namespace App\Enums\Module;
 
-use App\Enums\Tenant\MetaProperties\ClassName;
+use App\Enums\Module\MetaProperties\ClassName;
 use App\Services\Modules\Employees\EmployeesModule;
 use App\Services\Modules\Finantial\FinantialModule;
 use App\Traits\InteractsWithEnumsMetaProperties;
+use ArchTech\Enums\Meta\Meta;
+use ArchTech\Enums\Metadata;
 use ArchTech\Enums\Values;
 
+#[Meta(ClassName::class)]
 enum Name: string
 {
     use Values;
     use InteractsWithEnumsMetaProperties;
+    use Metadata;
 
     #[ClassName(FinantialModule::class)]
     case FINANTIAL = 'finantial';

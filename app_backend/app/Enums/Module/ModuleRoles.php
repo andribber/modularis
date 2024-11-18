@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Enums;
+namespace App\Enums\Module;
 
 use ArchTech\Enums\Values;
 

@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class UserModule extends Pivot
+class ModuleUser extends Pivot
 {
-    protected $table = 'user_module';
+    protected $table = 'module_user';
 
     public function user(): BelongsTo
     {

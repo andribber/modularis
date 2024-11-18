@@ -8,7 +8,7 @@ use App\Enums\ServiceEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class ModuleRequest extends FormRequest
+class ExecutionRequest extends FormRequest
 {
     public function rules(): array
     {

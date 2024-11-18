@@ -3,8 +3,8 @@
 namespace App\Services\Modules\Contracts;
 
 use App\Models\Tenant;
-use App\Services\Modules\Base\Interfaces\Action;
-use App\Services\Modules\Base\Interfaces\Service;
+use App\Services\Modules\Interfaces\Action;
+use App\Services\Modules\Interfaces\Service;
 use Illuminate\Database\Eloquent\Model;
 
 abstract class ModuleContract

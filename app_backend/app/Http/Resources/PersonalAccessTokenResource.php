@@ -17,6 +17,7 @@ class PersonalAccessTokenResource extends JsonResource
                 ! $this->resource->relationLoaded('tenant_user'),
                 $this->tenant_user_id,
             ),
+            'tenant_id' => $this->tenantUser->tenant_id,
             'token' => $this->token,
             'updated_at' => $this->updated_at,
         ];

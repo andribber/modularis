@@ -58,9 +58,9 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         return $this->belongsToMany(Module::class);
     }
 
-    public function userModule(): HasMany
+    public function moduleUser(): HasMany
     {
-        return $this->hasMany(UserModule::class);
+        return $this->hasMany(ModuleUser::class);
     }
 
     public function tokens(): HasManyThrough

@@ -3,8 +3,9 @@
 namespace App\Services\Modules\Employees\Actions\Employee;
 
 use App\Enums\ActionEnum;
-use App\Services\Modules\Base\Interfaces\Action;
-use App\Services\Modules\Base\Interfaces\Service;
+use App\Services\Modules\Employees\Actions\Employee\Controls\Create;
+use App\Services\Modules\Interfaces\Action;
+use App\Services\Modules\Interfaces\Service;
 
 class Employee implements Service
 {

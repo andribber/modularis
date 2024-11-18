@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Enums\Module\Name;
 use App\Models\Module;
 use App\Models\Tenant;
-use App\Services\Modules\Employees\EmployeesModule;
-use App\Services\Modules\Finantial\FinantialModule;
 use Illuminate\Database\Seeder;
 
 class ModuleSeeder extends Seeder
@@ -14,12 +13,12 @@ class ModuleSeeder extends Seeder
     {
         $modules = Module::factory()->createMany([
             [
-                'name' => 'employees',
-                'class' => EmployeesModule::class,
+                'name' => Name::EMPLOYEES,
+                'class' => Name::EMPLOYEES->className(),
             ],
             [
-                'name' => 'finantial',
-                'class' => FinantialModule::class,
+                'name' => Name::FINANTIAL,
+                'class' => Name::FINANTIAL->className(),
             ],
         ]);
 

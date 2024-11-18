@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\Modules\Employees\Actions\Employee;
+namespace App\Services\Modules\Employees\Actions\Employee\Controls;
 
-use App\Services\Modules\Base\Interfaces\Action;
+use App\Services\Modules\Interfaces\Action;
 
 class Create implements Action
 {

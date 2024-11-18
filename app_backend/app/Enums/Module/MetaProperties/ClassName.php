@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Enums\Tenant\MetaProperties;
+namespace App\Enums\Module\MetaProperties;
 
 use ArchTech\Enums\Meta\MetaProperty;
 use Attribute;

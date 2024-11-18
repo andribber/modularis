@@ -3,9 +3,9 @@
 namespace App\Services\Modules\Employees;
 
 use App\Models\Module;
-use App\Services\Modules\Base\Interfaces\Service;
 use App\Services\Modules\Contracts\ModuleContract;
 use App\Services\Modules\Employees\Actions\Employee\Employee;
+use App\Services\Modules\Interfaces\Service;
 use Illuminate\Database\Eloquent\Model;
 
 class EmployeesModule extends ModuleContract

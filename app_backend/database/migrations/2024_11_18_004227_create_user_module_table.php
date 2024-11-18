@@ -8,11 +8,11 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('user_module', function (Blueprint $table) {
+        Schema::create('module_user', function (Blueprint $table) {
             $table->primaryUlid('usrmd');
             $table->foreignUlid('user_id', 35)->references('id')->on('users');
             $table->foreignUlid('module_id', 35)->references('id')->on('modules');
-            $table->timestamp('role');
+            $table->string('role');
 
             $table->timestamps();
         });
@@ -20,6 +20,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('user_module');
+        Schema::dropIfExists('module_user');
     }
 };

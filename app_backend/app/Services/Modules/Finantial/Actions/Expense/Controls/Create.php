@@ -2,7 +2,7 @@
 
 namespace App\Services\Modules\Finantial\Actions\Expense\Controls;
 
-use App\Services\Modules\Base\Interfaces\Action;
+use App\Services\Modules\Interfaces\Action;
 
 class Create implements Action
 {

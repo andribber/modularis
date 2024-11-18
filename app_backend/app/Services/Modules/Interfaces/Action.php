@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Modules\Base\Interfaces;
+namespace App\Services\Modules\Interfaces;
 
 interface Action
 {

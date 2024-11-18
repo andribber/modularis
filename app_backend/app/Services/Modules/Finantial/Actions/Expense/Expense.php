@@ -3,9 +3,9 @@
 namespace App\Services\Modules\Finantial\Actions\Expense;
 
 use App\Enums\ActionEnum;
-use App\Services\Modules\Base\Interfaces\Action;
-use App\Services\Modules\Base\Interfaces\Service;
 use App\Services\Modules\Finantial\Actions\Expense\Controls\Create;
+use App\Services\Modules\Interfaces\Action;
+use App\Services\Modules\Interfaces\Service;
 
 class Expense implements Service
 {

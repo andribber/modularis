@@ -11,6 +11,8 @@ class UserQuery extends QueryBuilder
     {
         parent::__construct(User::query());
 
+        $this->allowedIncludes(['modules']);
+
         $this->allowedSorts([
             'created_at',
             'id',

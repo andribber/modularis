@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\V1\ExecutionController;
+use App\Http\Controllers\V1\ModuleController;
 use App\Http\Controllers\V1\PingController;
 use App\Http\Controllers\V1\TenantController;
 use App\Http\Controllers\V1\TenantUserController;
@@ -45,6 +47,19 @@ $router->name('v1.')->group(function (Router $router) use ($loginLimiter) {
                             ->name('users.tenants.role.update');
                         $router->delete('/', [TenantUserController::class, 'detach'])
                             ->name('users.tenants.detach');
+                    });
+                });
+
+                $router->group(['prefix' => '/modules'], function (Router $router) {
+                    $router->get('/', [ModuleController::class, 'index'])->name('tenants.modules.index');
+                    $router->post('/contract', [ModuleController::class, 'contract'])->name('tenants.modules.contract');
+                    
+                    $router->group(['prefix' => '/{module}'], function (Router $router) {
+                        $router->get('/', [ModuleController::class, 'show'])->name('tenants.modules.show');
+                        $router->post('/attach-users', [ModuleController::class, 'attachUsers'])
+                            ->name('tenants.modules.attach-users');
+
+                        $router->post('/execute', ExecutionController::class)->name('tenants.modules.execute');
                     });
                 });
 

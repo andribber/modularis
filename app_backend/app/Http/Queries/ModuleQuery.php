@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Queries\Modules;
+namespace App\Http\Queries;
 
 use App\Models\Module;
 use Spatie\QueryBuilder\QueryBuilder;

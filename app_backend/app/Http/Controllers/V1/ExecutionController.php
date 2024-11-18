@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Modules\ModuleRequest;
+use App\Http\Requests\Modules\ExecutionRequest;
 use App\Managers\ModuleManager;
 use App\Models\Tenant;
 use App\Models\ModuleTenant;
@@ -20,7 +20,7 @@ class ExecutionController extends Controller
     ){
     }
 
-    public function __invoke(Tenant $tenant, ModuleRequest $request)
+    public function __invoke(Tenant $tenant, ExecutionRequest $request)
     {
         $user = auth()->user();
         $data = $request->validated();

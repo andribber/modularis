@@ -28,7 +28,9 @@ class ModuleTenantPolicy
 
     public function attachUsers(User $user, Tenant $tenant, Module $module)
     {
-        return $tenant->modules()->where('id', $module->id)->acessible()->exists()
+        return $tenant->modules()
+                ->where('modules.id', $module->id)
+                ->where('module_tenant.expires_at', '>=', now())->exists()
             && $tenant->canAdmin($user)
             && $module->canBeAccessedBy($user, $tenant);
     }
