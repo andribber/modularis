@@ -5,6 +5,7 @@ namespace App\Services\Modules\Contracts;
 use App\Models\Tenant;
 use App\Services\Modules\Base\Interfaces\Action;
 use App\Services\Modules\Base\Interfaces\Service;
+use Illuminate\Database\Eloquent\Model;
 
 abstract class ModuleContract
 {
@@ -39,6 +40,6 @@ abstract class ModuleContract
     }
 
     abstract public function getService(string $service): Service;
-
+    abstract public function getModel(): Model;
     abstract protected function execute(): void;
 }

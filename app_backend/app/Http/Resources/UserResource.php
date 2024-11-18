@@ -15,6 +15,7 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'updated_at' => $this->updated_at,
+            'modules' => $this->whenLoaded('modules', ModuleResource::collection($this->modules)),
         ];
     }
 }

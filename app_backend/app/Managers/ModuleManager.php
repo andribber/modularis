@@ -24,7 +24,7 @@ class ModuleManager
         $service = $module->getService($parameters['service']);
         $action = $service->getAction($parameters['action']);
 
-        $module->setTenant($tenant)
+        return $module->setTenant($tenant)
             ->setService($service)
             ->setAction($action)
             ->handle($parameters['instructions']);

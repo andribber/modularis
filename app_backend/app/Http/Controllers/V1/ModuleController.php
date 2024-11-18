@@ -3,25 +3,86 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Modules\ModuleRequest;
-use App\Managers\ModuleManager;
-use Laravel\Horizon\Exceptions\ForbiddenException;
+use App\Http\Queries\Modules\ModuleQuery;
+use App\Http\Queries\UserModuleQuery;
+use App\Http\Requests\Modules\AttachUserRequest;
+use App\Http\Requests\Modules\ContractRequest;
+use App\Http\Resources\ModuleResource;
+use App\Http\Resources\UserModuleResource;
+use App\Models\Module;
+use App\Models\Tenant;
+use App\Models\ModuleTenant;
+use App\Services\Modules\Infrastructure\ModuleProxy;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class ModuleController extends Controller
 {
-    public function __construct(private ModuleManager $moduleManager)
+    use AuthorizesRequests;
+
+    public function __construct(private readonly ModuleProxy $moduleProxy)
     {
     }
 
-    public function __invoke(ModuleRequest $request)
+    public function index(Request $request, Tenant $tenant, ModuleQuery $query): JsonResource
     {
-        $tenant = auth()->tenant();
-        $data = $request->validated();
+        $this->authorize('view', $tenant);
+        
+        return ModuleResource::collection(
+            $query->whereHas('tenants', fn (Builder $query) => $query->where('id', $tenant->id))
+                ->simplePaginate($request->get('limit', config('app.pagination_limit')))
+        );
+    }
 
-        if(! $tenant->verifyPermissions($data['module'])) {
-            throw new ForbiddenException('403');
+    public function show(Request $request, ModuleQuery $query, Tenant $tenant, Module $module): JsonResource
+    {
+        $this->authorize('view', $tenant);
+        
+        return ModuleResource::make(
+            $query->where('id', $module->id)
+                ->whereHas('tenants', fn (Builder $query) => $query->where('id', $tenant->id))
+                ->first()
+        );
+    }
+
+    public function contract(ContractRequest $request, Tenant $tenant): JsonResponse
+    {
+        $this->authorize('attach', $tenant);
+
+        $class = $request->validated('class');
+        $module = $this->moduleProxy->getModule($class);
+
+        $tenant->modules()->attach($module->getModel(), ['expires_at', now()->addMonth()]);
+
+        return response()->json(status: 204);
+    }
+
+    public function attachUser(
+        AttachUserRequest $request,
+        UserModuleQuery $query,
+        Tenant $tenant,
+        Module $module
+    ): JsonResponse {
+        $this->authorize('attachUsers', ModuleTenant::class, [$tenant, $module]);
+
+        $userIds = [];
+
+        foreach ($request->validated('members') as $member) {
+            $userIds[] = $member['user_id'];
+            $module->users()->attach($member['user_id'], ['role' => $member['role']]);
         }
 
-        $this->moduleManager->handle($tenant, $data);
+        return UserModuleResource::collection(
+            $query->where('module_id', $module->id)
+                ->whereIn('user_id', $userIds)
+                ->simplePaginate($request->get('limit', config('app.pagination_limit')))
+                ->appends($request->query()),
+        )
+            ->response()
+            ->setStatusCode(Response::HTTP_CREATED);
     }
 }

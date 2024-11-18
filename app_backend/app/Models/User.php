@@ -7,6 +7,7 @@ use App\Traits\InteractsWithObject;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -50,6 +51,16 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
             ->using(TenantUser::class)
             ->withTimestamps()
             ->withPivot('role');
+    }
+
+    public function modules(): BelongsToMany
+    {
+        return $this->belongsToMany(Module::class);
+    }
+
+    public function userModule(): HasMany
+    {
+        return $this->hasMany(UserModule::class);
     }
 
     public function tokens(): HasManyThrough

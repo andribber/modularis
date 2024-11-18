@@ -3,11 +3,13 @@
 namespace App\Services\Modules\Infrastructure;
 
 use App\Services\Modules\Contracts\ModuleContract;
+use App\Services\Modules\Employees\EmployeesModule;
 use App\Services\Modules\Finantial\FinantialModule;
 
 class ModuleProxy
 {
     public function __construct(
+        private EmployeesModule $employee,
         private FinantialModule $finantial,
     ) {
     }
@@ -16,6 +18,7 @@ class ModuleProxy
     {
         return match ($moduleClass) {
             FinantialModule::class => $this->finantial,
+            EmployeesModule::class => $this->employee,
         };
     }
 }

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Tenant extends Model
@@ -42,6 +43,16 @@ class Tenant extends Model
             ->withPivot('role');
     }
 
+    public function modules(): BelongsToMany
+    {
+        return $this->belongsToMany(Module::class);
+    }
+
+    public function moduleTenant(): HasMany
+    {
+        return $this->hasMany(ModuleTenant::class);
+    }
+
     protected function responsible(): Attribute
     {
         return Attribute::make(
@@ -53,6 +64,16 @@ class Tenant extends Model
                         ->first(),
                 ),
         );
+    }
+
+    public function canAdmin(User $user,): bool
+    {
+        return $this->users()->where('user_id', $user->id)->whereIn('role', Role::canAdmin(true))->exists();
+    }
+
+    public function canAccess(User $user): bool
+    {
+        return $this->users()->where('user_id', $user->id)->whereIn('role', Role::canAccess(true))->exists();
     }
 
     public function isAdmin(User $user): bool

@@ -5,14 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class TenantModule extends Pivot
+class UserModule extends Pivot
 {
-    protected $table = 'tenant_module';
-    protected $keyType = 'string';
+    protected $table = 'user_module';
 
-    public function tenant(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Tenant::class);
+        return $this->belongsTo(User::class);
     }
 
     public function module(): BelongsTo
