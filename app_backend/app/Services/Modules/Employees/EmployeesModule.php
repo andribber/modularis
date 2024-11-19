@@ -22,13 +22,12 @@ class EmployeesModule extends ModuleContract
 
     public function getService(string $service): Service
     {
-        return match($service) {
+        return match ($service) {
             Employee::class => $this->employee,
         };
     }
 
     protected function execute(): void
     {
-        
     }
 }

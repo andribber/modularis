@@ -24,7 +24,7 @@ class ModuleSeeder extends Seeder
 
         Tenant::all()->each(
             fn (Tenant $tenant) => $tenant->modules()
-                ->attach($modules->pluck('id'), ['expires_at' => now()->addMonth()])
+                ->attach($modules->pluck('id'), ['expires_at' => now()->addMonth()]),
         );
     }
 }

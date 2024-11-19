@@ -8,6 +8,5 @@ class Create implements Action
 {
     public function run(array $parameters): void
     {
-        
     }
 }

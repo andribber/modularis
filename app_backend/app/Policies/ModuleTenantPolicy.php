@@ -24,8 +24,8 @@ class ModuleTenantPolicy
     public function attachUsers(User $user, Tenant $tenant, Module $module)
     {
         return $tenant->modules()
-                ->where('modules.id', $module->id)
-                ->where('module_tenant.expires_at', '>=', now())->exists()
+            ->where('modules.id', $module->id)
+            ->where('module_tenant.expires_at', '>=', now())->exists()
             && $tenant->canAdmin($user);
     }
 }

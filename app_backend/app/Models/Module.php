@@ -54,11 +54,11 @@ class Module extends Model
             'moduleUser',
             fn (Builder $query) => $query->whereBelongsTo($user)->whereIn('module_user.role', ModuleRoles::values()),
         )
-        ->whereHas(
-            'moduleTenant',
-            fn (Builder $query) => $query->whereBelongsTo($tenant)->where('module_tenant.expires_at', '>=', now()),
-        )
-        ->exists();
+            ->whereHas(
+                'moduleTenant',
+                fn (Builder $query) => $query->whereBelongsTo($tenant)->where('module_tenant.expires_at', '>=', now()),
+            )
+            ->exists();
     }
 
     public function scopeAccessible(Builder $query): Builder

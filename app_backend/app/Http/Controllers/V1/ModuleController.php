@@ -10,8 +10,8 @@ use App\Http\Requests\Modules\ContractRequest;
 use App\Http\Resources\ModuleResource;
 use App\Http\Resources\ModuleUserResource;
 use App\Models\Module;
-use App\Models\Tenant;
 use App\Models\ModuleTenant;
+use App\Models\Tenant;
 use App\Services\Modules\Infrastructure\ModuleProxy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -34,7 +34,7 @@ class ModuleController extends Controller
         
         return ModuleResource::collection(
             $query->whereHas('tenants', fn (Builder $query) => $query->where('tenants.id', $tenant->id))
-                ->simplePaginate($request->get('limit', config('app.pagination_limit')))
+                ->simplePaginate($request->get('limit', config('app.pagination_limit'))),
         );
     }
 
@@ -45,7 +45,7 @@ class ModuleController extends Controller
         return ModuleResource::make(
             $query->where('modules.id', $module->id)
                 ->whereHas('tenants', fn (Builder $query) => $query->where('tenants.id', $tenant->id))
-                ->first()
+                ->first(),
         );
     }
 
@@ -66,7 +66,7 @@ class ModuleController extends Controller
         AttachUserRequest $request,
         ModuleUserQuery $query,
         Tenant $tenant,
-        Module $module
+        Module $module,
     ): JsonResponse {
         $this->authorize('attachUsers', [ModuleTenant::class, $tenant, $module]);
 

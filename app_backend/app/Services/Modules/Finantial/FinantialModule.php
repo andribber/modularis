@@ -22,7 +22,7 @@ class FinantialModule extends ModuleContract
 
     public function getService(string $service): Service
     {
-        return match($service) {
+        return match ($service) {
             Expense::class => $this->expense,
         };
     }

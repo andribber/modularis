@@ -5,8 +5,8 @@ namespace App\Http\Controllers\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Modules\ExecutionRequest;
 use App\Managers\ModuleManager;
-use App\Models\Tenant;
 use App\Models\ModuleTenant;
+use App\Models\Tenant;
 use App\Services\Modules\Infrastructure\ModuleProxy;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
@@ -16,8 +16,8 @@ class ExecutionController extends Controller
 
     public function __construct(
         private ModuleManager $moduleManager,
-        private ModuleProxy $moduleProxy
-    ){
+        private ModuleProxy $moduleProxy,
+    ) {
     }
 
     public function __invoke(Tenant $tenant, ExecutionRequest $request)

@@ -16,7 +16,7 @@ class Expense implements Service
 
     public function getAction(string $action): Action
     {
-        return match($action) {
+        return match ($action) {
             ActionEnum::CREATE->value => $this->create,
         };
     }

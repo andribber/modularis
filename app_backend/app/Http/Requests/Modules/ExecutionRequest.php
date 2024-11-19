@@ -13,7 +13,7 @@ class ExecutionRequest extends FormRequest
     {
         return [
             'service' => ['string', 'required', Rule::in(ServiceEnum::values())],
-            'action'  => ['string', 'required', Rule::in(ActionEnum::values())],
+            'action' => ['string', 'required', Rule::in(ActionEnum::values())],
             'instructions' => ['array', 'required'],
         ];
     }

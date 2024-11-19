@@ -13,9 +13,9 @@ use ArchTech\Enums\Values;
 #[Meta(ClassName::class)]
 enum Name: string
 {
-    use Values;
     use InteractsWithEnumsMetaProperties;
     use Metadata;
+    use Values;
 
     #[ClassName(FinantialModule::class)]
     case FINANTIAL = 'finantial';
@@ -25,7 +25,7 @@ enum Name: string
 
     public static function resolveClass(string $name)
     {
-        return match($name) {
+        return match ($name) {
             self::EMPLOYEES->value => self::EMPLOYEES->className(),
             self::FINANTIAL->value => self::FINANTIAL->className(),
         };
