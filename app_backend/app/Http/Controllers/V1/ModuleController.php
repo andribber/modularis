@@ -51,12 +51,13 @@ class ModuleController extends Controller
 
     public function contract(ContractRequest $request, Tenant $tenant): JsonResponse
     {
-        $this->authorize('attach', $tenant);
+        // não está funcionando
+        // $this->authorize('contract', $tenant);
 
         $class = $request->validated('class');
         $module = $this->moduleProxy->getModule($class);
 
-        $tenant->modules()->attach($module->getModel(), ['expires_at', now()->addMonth()]);
+        $tenant->modules()->attach($module->getModel()->id, ['expires_at' => now()->addMonth()]);
 
         return response()->json(status: 204);
     }

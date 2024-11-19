@@ -27,7 +27,7 @@ enum Name: string
     {
         return match($name) {
             self::EMPLOYEES->value => self::EMPLOYEES->className(),
-            self::FINANTIAL->value => self::EMPLOYEES->className(),
+            self::FINANTIAL->value => self::FINANTIAL->className(),
         };
     }
 }

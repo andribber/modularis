@@ -56,9 +56,9 @@ class Module extends Model
         )
         ->whereHas(
             'moduleTenant',
-            fn (Builder $query) => $query->whereBelongsTo($tenant)->where('module_tenant.expires_at', '>=', now()->timestamp),
+            fn (Builder $query) => $query->whereBelongsTo($tenant)->where('module_tenant.expires_at', '>=', now()),
         )
-        ->dd();
+        ->exists();
     }
 
     public function scopeAccessible(Builder $query): Builder

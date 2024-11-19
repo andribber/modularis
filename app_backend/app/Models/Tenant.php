@@ -66,7 +66,7 @@ class Tenant extends Model
         );
     }
 
-    public function canAdmin(User $user,): bool
+    public function canAdmin(User $user): bool
     {
         return $this->users()->where('user_id', $user->id)->whereIn('role', Role::canAdmin(true))->exists();
     }

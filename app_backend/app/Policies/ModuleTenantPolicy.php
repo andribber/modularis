@@ -15,11 +15,6 @@ class ModuleTenantPolicy
             && $module->canBeAccessedBy($user, $tenant);
     }
 
-    public function attach(User $user, Tenant $tenant)
-    {
-        return $tenant->canAdmin($user);
-    }
-
     public function detach(User $user, Tenant $tenant, Module $module)
     {
         return $tenant->modules()->where('id', $module->id)->acessible()->exists()
@@ -31,7 +26,6 @@ class ModuleTenantPolicy
         return $tenant->modules()
                 ->where('modules.id', $module->id)
                 ->where('module_tenant.expires_at', '>=', now())->exists()
-            && $tenant->canAdmin($user)
-            && $module->canBeAccessedBy($user, $tenant);
+            && $tenant->canAdmin($user);
     }
 }

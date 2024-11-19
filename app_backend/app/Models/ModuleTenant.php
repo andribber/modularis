@@ -10,6 +10,12 @@ class ModuleTenant extends Pivot
     protected $table = 'module_tenant';
     protected $keyType = 'string';
 
+    protected $fillable = [
+        'expires_at',
+        'created_at',
+        'updated_at',
+    ];
+
     public function tenant(): BelongsTo
     {
         return $this->belongsTo(Tenant::class);

@@ -9,6 +9,12 @@ class ModuleUser extends Pivot
 {
     protected $table = 'module_user';
 
+    protected $fillable = [
+        'role',
+        'created_at',
+        'updated_at',
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
