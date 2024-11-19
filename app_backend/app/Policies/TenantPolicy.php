@@ -15,6 +15,11 @@ class TenantPolicy
         return true;
     }
 
+    public function contract(User $user, Tenant $tenant): bool
+    {
+        return $tenant->canAdmin($user);
+    }
+
     public function view(User $user, Tenant $tenant): bool
     {
         return $tenant->is($user->tenants()->wherePivot('tenant_id', $tenant->id)->first());

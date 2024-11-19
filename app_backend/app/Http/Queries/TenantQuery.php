@@ -10,6 +10,8 @@ class TenantQuery extends WithAppendsQueryBuilder
     {
         parent::__construct(Tenant::query());
 
+        $this->allowedIncludes(['modules']);
+
         $this->allowedAppends([
             'me',
             'owner',
