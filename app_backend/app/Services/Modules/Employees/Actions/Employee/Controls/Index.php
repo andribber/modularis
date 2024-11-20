@@ -12,7 +12,7 @@ use Illuminate\Validation\Rule;
 class Index implements Action
 {
     public function __construct(
-        private readonly Employee $employee
+        private readonly Employee $employee,
     ) {
     }
 

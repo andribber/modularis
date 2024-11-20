@@ -18,7 +18,8 @@ class CreateUser
                 'name' => $employee->name,
                 'email' => $employee->email,
                 'password' => '123',
-            ]);
+            ],
+        );
 
         $employee->updateQuietly(['user_id' => $user->id]);
         $employee->tenant->users()->attach($user->id, ['role' => Role::VIEWER]);

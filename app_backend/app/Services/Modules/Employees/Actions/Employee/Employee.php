@@ -6,8 +6,8 @@ use App\Enums\ActionEnum;
 use App\Services\Modules\Employees\Actions\Employee\Controls\Create;
 use App\Services\Modules\Employees\Actions\Employee\Controls\Delete;
 use App\Services\Modules\Employees\Actions\Employee\Controls\Edit;
-use App\Services\Modules\Employees\Actions\Employee\Controls\Show;
 use App\Services\Modules\Employees\Actions\Employee\Controls\Index;
+use App\Services\Modules\Employees\Actions\Employee\Controls\Show;
 use App\Services\Modules\Interfaces\Action;
 use App\Services\Modules\Interfaces\Service;
 
