@@ -21,10 +21,10 @@ class ExecutionRequest extends FormRequest
 
     private function getActionValidation(): array
     {
-        $moduleAcessor = $this->route('module')->getModulegetModuleAcessorService();
-        $service = $moduleAcessor->getService($this->input('service'));
-        $action = $service->getAction($this->input('action'));
-
-        return $action->getValidationRules();
+        return $this->route('module')
+            ->getModulegetModuleAcessorService()
+            ->getService($this->input('service'))
+            ->getAction($this->input('action'))
+            ->getValidationRules();
     }
 }
