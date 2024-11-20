@@ -3,6 +3,7 @@
 namespace App\Services\Modules\Employees;
 
 use App\Models\Module;
+use App\Models\Tenant;
 use App\Services\Modules\Contracts\ModuleContract;
 use App\Services\Modules\Employees\Actions\Employee\Employee;
 use App\Services\Modules\Interfaces\Service;
@@ -27,7 +28,8 @@ class EmployeesModule extends ModuleContract
         };
     }
 
-    protected function execute(): void
+    protected function execute(array $parameters): void
     {
+        $this->action->run($this->tenant, $parameters);
     }
 }

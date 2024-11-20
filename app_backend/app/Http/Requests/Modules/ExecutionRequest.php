@@ -15,6 +15,16 @@ class ExecutionRequest extends FormRequest
             'service' => ['string', 'required', Rule::in(ServiceEnum::values())],
             'action' => ['string', 'required', Rule::in(ActionEnum::values())],
             'instructions' => ['array', 'required'],
+            'instructions.*' => $this->getActionValidation(),
         ];
+    }
+
+    private function getActionValidation(): array
+    {
+        $moduleAcessor = $this->route('module')->getModulegetModuleAcessorService();
+        $service = $moduleAcessor->getService($this->input('service'));
+        $action = $service->getAction($this->input('action'));
+
+        return $action->getValidationRules();
     }
 }

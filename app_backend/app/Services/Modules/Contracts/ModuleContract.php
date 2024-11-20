@@ -13,9 +13,9 @@ abstract class ModuleContract
     protected Service $service;
     protected Action $action;
 
-    public function handle()
+    public function handle(array $parameters)
     {
-        return $this->execute();
+        return $this->execute($parameters);
     }
 
     public function setTenant(Tenant $tenant): self
@@ -41,5 +41,5 @@ abstract class ModuleContract
 
     abstract public function getService(string $service): Service;
     abstract public function getModel(): Model;
-    abstract protected function execute(): void;
+    abstract protected function execute(array $parameters): void;
 }

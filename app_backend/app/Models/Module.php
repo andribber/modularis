@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Enums\Module\ModuleRoles;
 use App\Enums\Module\Name;
+use App\Services\Modules\Contracts\ModuleContract;
+use App\Services\Modules\Employees\EmployeesModule;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -67,5 +69,10 @@ class Module extends Model
             'moduleTenant',
             fn (Builder $query) => $query->where('expires_at', '>=', now()),
         );
+    }
+
+    public function getModuleAcessor(): ModuleContract
+    {
+        return app(EmployeesModule::class);
     }
 }
