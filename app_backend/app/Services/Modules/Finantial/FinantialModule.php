@@ -27,7 +27,7 @@ class FinantialModule extends ModuleContract
         };
     }
 
-    protected function execute(): void
+    protected function execute(array $parameters): void
     {
     }
 }

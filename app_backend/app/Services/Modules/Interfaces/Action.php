@@ -2,7 +2,11 @@
 
 namespace App\Services\Modules\Interfaces;
 
+use App\Models\Tenant;
+
 interface Action
 {
-    public function run(array $parameters): void;
+    public function run(Tenant $tenant, array $parameters): mixed;
+
+    public function getValidationRules(): array;
 }

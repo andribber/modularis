@@ -91,6 +91,11 @@ class Tenant extends Model
         return $this->users()->where('user_id', $user->id)->where('role', Role::PERSONAL)->exists();
     }
 
+    public function getOwner(): User
+    {
+        return $this->users()->where('role', Role::OWNER)->first();
+    }
+
     protected function hasOwner(): Attribute
     {
         return Attribute::make(
