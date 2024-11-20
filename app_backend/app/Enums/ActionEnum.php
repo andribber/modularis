@@ -11,5 +11,6 @@ enum ActionEnum: string
     case CREATE = 'create';
     case DELETE = 'delete';
     case EDIT = 'edit';
-    case VIEW = 'view';
+    case INDEX = 'index';
+    case SHOW = 'show';
 }

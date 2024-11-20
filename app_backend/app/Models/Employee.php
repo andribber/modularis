@@ -15,6 +15,8 @@ class Employee extends Model
     protected $keyType = 'string';
 
     protected $fillable = [
+        'user_id',
+        'tenant_id',
         'name',
         'email',
         'occupation',

@@ -2,8 +2,8 @@
 
 namespace App\Services\Modules\Employees;
 
+use App\Enums\ServiceEnum;
 use App\Models\Module;
-use App\Models\Tenant;
 use App\Services\Modules\Contracts\ModuleContract;
 use App\Services\Modules\Employees\Actions\Employee\Employee;
 use App\Services\Modules\Interfaces\Service;
@@ -24,12 +24,12 @@ class EmployeesModule extends ModuleContract
     public function getService(string $service): Service
     {
         return match ($service) {
-            Employee::class => $this->employee,
+            ServiceEnum::EMPLOYEE->value => $this->employee,
         };
     }
 
-    protected function execute(array $parameters): void
+    protected function execute(array $parameters): mixed
     {
-        $this->action->run($this->tenant, $parameters);
+        return $this->action->run($this->tenant, $parameters);
     }
 }

@@ -9,7 +9,7 @@ class ModuleManager
 {
     public function handle(Tenant $tenant, Module $module, array $parameters)
     {
-        $moduleAcessor = $module->getModuleAcessor();
+        $moduleAcessor = $module->getModuleAcessorService();
         $service = $moduleAcessor->getService($parameters['service']);
         $action = $service->getAction($parameters['action']);
 

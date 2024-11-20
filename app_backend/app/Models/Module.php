@@ -63,15 +63,7 @@ class Module extends Model
             ->exists();
     }
 
-    public function scopeAccessible(Builder $query): Builder
-    {
-        return $query->whereHas(
-            'moduleTenant',
-            fn (Builder $query) => $query->where('expires_at', '>=', now()),
-        );
-    }
-
-    public function getModuleAcessor(): ModuleContract
+    public function getModuleAcessorService(): ModuleContract
     {
         return app(EmployeesModule::class);
     }

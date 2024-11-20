@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Modules\ExecutionRequest;
 use App\Managers\ModuleManager;
 use App\Models\Module;
-use App\Models\ModuleTenant;
 use App\Models\Tenant;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\JsonResponse;
 
 class ExecutionController extends Controller
 {
@@ -18,10 +18,10 @@ class ExecutionController extends Controller
     {
     }
 
-    public function __invoke(ExecutionRequest $request, Tenant $tenant, Module $module)
+    public function __invoke(ExecutionRequest $request, Tenant $tenant, Module $module): JsonResponse
     {
-        $this->authorize('access', [ModuleTenant::class, $tenant, $module]);
+        //$this->authorize('access', [ModuleTenant::class, $tenant, $module]);
 
-        $this->moduleManager->handle($tenant, $module, $request->validated());
+        return response()->json(['result' => $this->moduleManager->handle($tenant, $module, $request->validated())]);
     }
 }

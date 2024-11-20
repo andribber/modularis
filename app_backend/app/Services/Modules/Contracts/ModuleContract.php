@@ -41,5 +41,5 @@ abstract class ModuleContract
 
     abstract public function getService(string $service): Service;
     abstract public function getModel(): Model;
-    abstract protected function execute(array $parameters): void;
+    abstract protected function execute(array $parameters): mixed;
 }
