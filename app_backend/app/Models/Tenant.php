@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Enums\Tenant\Role;
+use App\Models\ModuleServices\Employees\Employee;
+use App\Models\ModuleServices\Employees\Team;
 use App\Traits\InteractsWithObject;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -51,6 +53,16 @@ class Tenant extends Model
     public function moduleTenant(): HasMany
     {
         return $this->hasMany(ModuleTenant::class);
+    }
+
+    public function employees(): HasMany
+    {
+        return $this->hasMany(Employee::class);
+    }
+
+    public function teams(): HasMany
+    {
+        return $this->hasMany(Team::class);
     }
 
     protected function responsible(): Attribute

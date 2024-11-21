@@ -2,7 +2,7 @@
 
 namespace App\Events\Employees;
 
-use App\Models\Employee;
+use App\Models\ModuleServices\Employees\Employee;
 
 class Created
 {

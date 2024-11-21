@@ -9,5 +9,6 @@ enum ServiceEnum: string
     use Values;
 
     case EMPLOYEE = 'employee';
+    case TEAM = 'team';
     case EXPENSE = 'expense';
 }

@@ -1,11 +1,15 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\ModuleServices\Employees;
 
 use App\Events\Employees\Created;
+use App\Models\Tenant;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Employee extends Model
 {
@@ -21,7 +25,7 @@ class Employee extends Model
         'email',
         'occupation',
         'salary',
-        'area', //teams feature
+        'team_id',
         'registry',
         'bank_account',
     ];
@@ -44,5 +48,15 @@ class Employee extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function teams(): BelongsToMany
+    {
+        return $this->belongsToMany(Team::class);
+    }
+
+    public function ledTeams(): HasMany
+    {
+        return $this->hasMany(Team::class, 'leader_id', 'id');
     }
 }

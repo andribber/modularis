@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services\Modules\Finantial\Actions\Expense;
+namespace App\Services\Modules\Finantial\Services\Expense;
 
 use App\Enums\ActionEnum;
-use App\Services\Modules\Finantial\Actions\Expense\Controls\Create;
+use App\Services\Modules\Finantial\Services\Expense\Actions\Create;
 use App\Services\Modules\Interfaces\Action;
 use App\Services\Modules\Interfaces\Service;
 

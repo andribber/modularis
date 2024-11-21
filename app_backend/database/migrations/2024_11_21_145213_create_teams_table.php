@@ -8,11 +8,12 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('module_tenant', function (Blueprint $table) {
-            $table->primaryUlid('tenmd');
+        Schema::create('teams', function (Blueprint $table) {
+            $table->primaryUlid('tea');
             $table->foreignPrefixedUlid('tenant_id')->references('id')->on('tenants')->onDelete('cascade');
-            $table->foreignPrefixedUlid('module_id')->references('id')->on('modules')->onDelete('cascade');
-            $table->timestamp('expires_at');
+            $table->foreignPrefixedUlid('leader_id')->references('id')->on('employees')->onDelete('cascade');
+            $table->string('name');
+            $table->string('description');
 
             $table->timestamps();
         });
@@ -20,6 +21,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('module_tenant');
+        Schema::dropIfExists('teams');
     }
 };

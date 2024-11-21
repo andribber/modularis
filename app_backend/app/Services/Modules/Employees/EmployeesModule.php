@@ -5,7 +5,8 @@ namespace App\Services\Modules\Employees;
 use App\Enums\ServiceEnum;
 use App\Models\Module;
 use App\Services\Modules\Contracts\ModuleContract;
-use App\Services\Modules\Employees\Actions\Employee\Employee;
+use App\Services\Modules\Employees\Services\Employee\Employee;
+use App\Services\Modules\Employees\Services\Team\Team;
 use App\Services\Modules\Interfaces\Service;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,6 +14,7 @@ class EmployeesModule extends ModuleContract
 {
     public function __construct(
         private Employee $employee,
+        private Team $team,
     ) {
     }
 
@@ -25,6 +27,7 @@ class EmployeesModule extends ModuleContract
     {
         return match ($service) {
             ServiceEnum::EMPLOYEE->value => $this->employee,
+            ServiceEnum::TEAM->value => $this->team,
         };
     }
 

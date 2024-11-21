@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services\Modules\Employees\Actions\Employee\Controls;
+namespace App\Services\Modules\Employees\Services\Employee\Actions;
 
 use App\Enums\ActionEnum;
 use App\Enums\ServiceEnum;
-use App\Models\Employee;
+use App\Models\ModuleServices\Employees\Employee;
 use App\Models\Tenant;
 use App\Services\Modules\Interfaces\Action;
 use Illuminate\Validation\Rule;
@@ -21,13 +21,13 @@ class Edit implements Action
         $employeeId = $parameters['employee_id'];
         unset($parameters['employee_id']);
 
-        return $this->employee
-            ->where('id', $employeeId)
-            ->where('tenant_id', $tenant->id)
-            ->update($parameters);
+        $employee = $tenant->employees()->where('id', $employeeId)->first();
+        $employee->update($parameters);
+
+        return $employee;
     }
 
-    public function getValidationRules(): array
+    public function getValidationRules(Tenant $tenant): array
     {
         return [
             'service' => ['string', 'required', Rule::in([ServiceEnum::EMPLOYEE->value])],

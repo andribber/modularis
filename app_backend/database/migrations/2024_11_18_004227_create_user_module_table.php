@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('module_user', function (Blueprint $table) {
             $table->primaryUlid('usrmd');
-            $table->foreignUlid('user_id', 35)->references('id')->on('users');
-            $table->foreignUlid('module_id', 35)->references('id')->on('modules');
+            $table->foreignPrefixedUlid('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignPrefixedUlid('module_id')->references('id')->on('modules')->onDelete('cascade');
             $table->string('role');
 
             $table->timestamps();
