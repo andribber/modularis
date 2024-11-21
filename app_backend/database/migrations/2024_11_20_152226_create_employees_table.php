@@ -10,13 +10,13 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->primaryUlid('emp');
-            $table->foreignUlid('tenant_id', 35)->references('id')->on('tenants');
-            $table->foreignUlid('user_id', 35)->nullable()->references('id')->on('users');
+            $table->foreignPrefixedUlid('tenant_id')->references('id')->on('tenants')->onDelete('cascade');
+            $table->foreignPrefixedUlid('user_id')->nullable()->references('id')->on('users')->onDelete('cascade');
             $table->string('name');
             $table->string('email');
             $table->string('occupation');
             $table->string('salary');
-            $table->string('area'); //teams feature
+            $table->string('area');
             $table->string('registry');
             $table->jsonb('bank_account');
 

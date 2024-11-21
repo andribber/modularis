@@ -18,9 +18,8 @@ class Show implements Action
 
     public function run(Tenant $tenant, array $parameters): mixed
     {
-        return $this->employee
+        return $tenant->employees()
             ->where('id', $parameters['employee_id'])
-            ->where('tenant_id', $tenant->id)
             ->first();
     }
 

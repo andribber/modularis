@@ -21,10 +21,10 @@ class Edit implements Action
         $employeeId = $parameters['employee_id'];
         unset($parameters['employee_id']);
 
-        return $this->employee
-            ->where('id', $employeeId)
-            ->where('tenant_id', $tenant->id)
-            ->update($parameters);
+        $employee = $tenant->employees()->where('id', $employeeId)->first();
+        $employee->update($parameters);
+
+        return $employee;
     }
 
     public function getValidationRules(Tenant $tenant): array

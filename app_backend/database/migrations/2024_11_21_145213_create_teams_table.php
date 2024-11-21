@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('teams', function (Blueprint $table) {
             $table->primaryUlid('tea');
-            $table->foreignUlid('tenant_id', 35)->references('id')->on('tenants');
-            $table->foreignUlid('leader_id', 35)->references('id')->on('employees');
+            $table->foreignPrefixedUlid('tenant_id')->references('id')->on('tenants')->onDelete('cascade');
+            $table->foreignPrefixedUlid('leader_id')->references('id')->on('employees')->onDelete('cascade');
             $table->string('name');
             $table->string('description');
 

@@ -4,21 +4,15 @@ namespace App\Services\Modules\Employees\Services\Employee\Actions;
 
 use App\Enums\ActionEnum;
 use App\Enums\ServiceEnum;
-use App\Models\ModuleServices\Employees\Employee;
 use App\Models\Tenant;
 use App\Services\Modules\Interfaces\Action;
 use Illuminate\Validation\Rule;
 
 class Create implements Action
 {
-    public function __construct(
-        private readonly Employee $employee,
-    ) {
-    }
-
     public function run(Tenant $tenant, array $parameters): mixed
     {
-        return $this->employee->create(['tenant_id' => $tenant->id, ...$parameters]);
+        return $tenant->employees()->create($parameters);
     }
 
     public function getValidationRules(Tenant $tenant): array

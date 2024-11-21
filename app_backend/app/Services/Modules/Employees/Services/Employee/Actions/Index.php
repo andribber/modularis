@@ -18,9 +18,7 @@ class Index implements Action
 
     public function run(Tenant $tenant, array $parameters): mixed
     {
-        return $this->employee
-            ->where('tenant_id', $tenant->id)
-            ->get();
+        return $tenant->employees()->get();
     }
 
     public function getValidationRules(Tenant $tenant): array

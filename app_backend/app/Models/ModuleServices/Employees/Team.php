@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Team extends Model
-{ 
+{
     use HasFactory;
 
     protected $table = 'teams';

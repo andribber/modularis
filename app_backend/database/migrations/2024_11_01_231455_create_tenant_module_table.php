@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('module_tenant', function (Blueprint $table) {
             $table->primaryUlid('tenmd');
-            $table->foreignUlid('tenant_id', 35)->references('id')->on('tenants');
-            $table->foreignUlid('module_id', 35)->references('id')->on('modules');
+            $table->foreignPrefixedUlid('tenant_id')->references('id')->on('tenants')->onDelete('cascade');
+            $table->foreignPrefixedUlid('module_id')->references('id')->on('modules')->onDelete('cascade');
             $table->timestamp('expires_at');
 
             $table->timestamps();

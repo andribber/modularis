@@ -21,8 +21,6 @@ class ExecutionController extends Controller
 
     public function __invoke(ExecutionRequest $request, Tenant $tenant, Module $module): JsonResponse
     {
-        $this->authorize('access', [ModuleTenant::class, $tenant, $module]);
-
         return response()->json(['result' => $this->moduleManager->handle($tenant, $module, $request->validated())]);
     }
 }

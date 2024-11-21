@@ -13,7 +13,10 @@ class Create implements Action
 {
     public function run(Tenant $tenant, array $parameters): mixed
     {
-        return [];
+        $team = $tenant->teams()->create($parameters);
+        $team->employees()->attach($parameters['leader_id']);
+
+        return $team;
     }
 
     public function getValidationRules(Tenant $tenant): array
