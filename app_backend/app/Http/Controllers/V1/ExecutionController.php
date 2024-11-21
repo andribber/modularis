@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Modules\ExecutionRequest;
 use App\Managers\ModuleManager;
 use App\Models\Module;
+use App\Models\ModuleTenant;
 use App\Models\Tenant;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\JsonResponse;
