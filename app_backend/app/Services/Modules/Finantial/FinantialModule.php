@@ -4,7 +4,7 @@ namespace App\Services\Modules\Finantial;
 
 use App\Models\Module as Module;
 use App\Services\Modules\Contracts\ModuleContract;
-use App\Services\Modules\Finantial\Actions\Expense\Expense;
+use App\Services\Modules\Finantial\Services\Expense\Expense;
 use App\Services\Modules\Interfaces\Service;
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,7 +27,8 @@ class FinantialModule extends ModuleContract
         };
     }
 
-    protected function execute(array $parameters): void
+    protected function execute(array $parameters): mixed
     {
+        return [];
     }
 }

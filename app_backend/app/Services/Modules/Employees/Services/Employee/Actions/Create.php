@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services\Modules\Employees\Actions\Employee\Controls;
+namespace App\Services\Modules\Employees\Services\Employee\Actions;
 
 use App\Enums\ActionEnum;
 use App\Enums\ServiceEnum;
-use App\Models\Employee;
+use App\Models\ModuleServices\Employees\Employee;
 use App\Models\Tenant;
 use App\Services\Modules\Interfaces\Action;
 use Illuminate\Validation\Rule;
@@ -21,7 +21,7 @@ class Create implements Action
         return $this->employee->create(['tenant_id' => $tenant->id, ...$parameters]);
     }
 
-    public function getValidationRules(): array
+    public function getValidationRules(Tenant $tenant): array
     {
         return [
             'service' => ['string', 'required', Rule::in([ServiceEnum::EMPLOYEE->value])],
@@ -31,7 +31,7 @@ class Create implements Action
             'instructions.email' => ['required', 'email'],
             'instructions.occupation' => ['required', 'string', 'max:255'],
             'instructions.salary' => ['required', 'string'],
-            'instructions.area' => ['required', 'string'], //teams feature
+            'instructions.team_id' => ['sometimes', 'string', 'exists:teams,id'], //teams feature
             'instructions.registry' => ['required', 'string', 'unique:employees,registry'],
             'instructions.bank_account' => ['required', 'array'],
             'instructions.bank_account.bank_name' => ['required', 'string'],

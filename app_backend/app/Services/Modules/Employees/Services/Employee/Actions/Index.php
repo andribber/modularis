@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Services\Modules\Employees\Actions\Employee\Controls;
+namespace App\Services\Modules\Employees\Services\Employee\Actions;
 
 use App\Enums\ActionEnum;
 use App\Enums\ServiceEnum;
-use App\Models\Employee;
+use App\Models\ModuleServices\Employees\Employee;
 use App\Models\Tenant;
 use App\Services\Modules\Interfaces\Action;
 use Illuminate\Validation\Rule;
 
-class Show implements Action
+class Index implements Action
 {
     public function __construct(
         private readonly Employee $employee,
@@ -19,18 +19,16 @@ class Show implements Action
     public function run(Tenant $tenant, array $parameters): mixed
     {
         return $this->employee
-            ->where('id', $parameters['employee_id'])
             ->where('tenant_id', $tenant->id)
-            ->first();
+            ->get();
     }
 
-    public function getValidationRules(): array
+    public function getValidationRules(Tenant $tenant): array
     {
         return [
             'service' => ['string', 'required', Rule::in([ServiceEnum::EMPLOYEE->value])],
-            'action' => ['string', 'required', Rule::in([ActionEnum::SHOW->value])],
-            'instructions' => ['array', 'required'],
-            'instructions.employee_id' => ['required', 'string', 'exists:employees,id'],
+            'action' => ['string', 'required', Rule::in([ActionEnum::INDEX->value])],
+            'instructions' => ['array', 'present'],
         ];
     }
 }

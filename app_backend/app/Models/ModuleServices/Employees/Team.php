@@ -1,39 +1,30 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\ModuleServices\Employees;
 
-use App\Events\Employees\Created;
+use App\Models\Tenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Employee extends Model
-{
+class Team extends Model
+{ 
     use HasFactory;
 
-    protected $table = 'employees';
+    protected $table = 'teams';
     protected $keyType = 'string';
 
     protected $fillable = [
-        'user_id',
         'tenant_id',
+        'leader_id',
         'name',
-        'email',
-        'occupation',
-        'salary',
-        'area', //teams feature
-        'registry',
-        'bank_account',
+        'description',
     ];
 
     protected $casts = [
-        'bank_account' => 'array',
         'created_at' => 'timestamp',
         'updated_at' => 'timestamp',
-    ];
-
-    protected $dispatchesEvents = [
-        'created' => Created::class,
     ];
 
     public function tenant(): BelongsTo
@@ -41,8 +32,13 @@ class Employee extends Model
         return $this->belongsTo(Tenant::class);
     }
 
-    public function user(): BelongsTo
+    public function employees(): BelongsToMany
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsToMany(Employee::class);
+    }
+
+    public function leader(): BelongsTo
+    {
+        return $this->belongsTo(Employee::class, 'leader_id');
     }
 }

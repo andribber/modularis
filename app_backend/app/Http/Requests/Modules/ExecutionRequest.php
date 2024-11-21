@@ -17,6 +17,6 @@ class ExecutionRequest extends FormRequest
             ->getModuleAcessorService()
             ->getService($this->input('service'))
             ->getAction($this->input('action'))
-            ->getValidationRules();
+            ->getValidationRules($this->route('tenant'));
     }
 }
