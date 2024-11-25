@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('employee_team', function (Blueprint $table) {
-            $table->id();
+            $table->primaryUlid('eteam');
             $table->foreignPrefixedUlid('employee_id')->references('id')->on('employees')->onDelete('cascade');
             $table->foreignPrefixedUlid('team_id')->references('id')->on('teams')->onDelete('cascade');
 

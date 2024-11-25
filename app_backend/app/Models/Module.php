@@ -5,23 +5,23 @@ namespace App\Models;
 use App\Enums\Module\ModuleRoles;
 use App\Enums\Module\Name;
 use App\Services\Modules\Contracts\ModuleContract;
-use App\Services\Modules\Employees\EmployeesModule;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Module extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $table = 'modules';
     protected $keyType = 'string';
 
     protected $fillable = [
         'name',
-        'class',
     ];
 
     protected $casts = [
@@ -65,6 +65,6 @@ class Module extends Model
 
     public function getModuleAcessorService(): ModuleContract
     {
-        return app(EmployeesModule::class);
+        return app($this->name->className());
     }
 }

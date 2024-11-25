@@ -16,11 +16,11 @@ return new class extends Migration
             $table->string('email');
             $table->string('occupation');
             $table->string('salary');
-            $table->string('area');
             $table->string('registry');
             $table->jsonb('bank_account');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
