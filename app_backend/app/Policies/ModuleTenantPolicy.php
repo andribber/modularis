@@ -18,7 +18,10 @@ class ModuleTenantPolicy
                 fn (Builder $query) => $query->where('module_tenant.expires_at', '>=', now()),
             )->exists()
             && $tenant->canAccess($user)
-            && ($tenant->isOwner($user) || $tenant->isPersonal($user) || $tenant->isAdmin($user) || $module->canBeAccessedBy($user, $tenant));
+            && ($tenant->isOwner($user)
+                || $tenant->isPersonal($user)
+                || $tenant->isAdmin($user)
+                || $module->canBeAccessedBy($user, $tenant));
     }
 
     public function detach(User $user, Tenant $tenant, Module $module)
