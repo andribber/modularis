@@ -10,12 +10,12 @@ class ModuleManager
     public function handle(Tenant $tenant, Module $module, array $parameters)
     {
         $moduleAcessor = $module->getModuleAcessorService();
-        $service = $moduleAcessor->getService($parameters['service']);
-        $action = $service->getAction($parameters['action']);
+        $service = $moduleAcessor->getService($parameters['service'] ?? null);
+        $action = $service->getAction($parameters['action'] ?? null);
 
         return $moduleAcessor->setTenant($tenant)
             ->setService($service)
             ->setAction($action)
-            ->handle($parameters['instructions']);
+            ->handle($parameters['instructions'] ?? null);
     }
 }
