@@ -2,8 +2,11 @@
 
 namespace App\Http\Requests\Modules;
 
+use App\Enums\ActionEnum;
+use App\Enums\ServiceEnum;
 use App\Models\ModuleTenant;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ExecutionRequest extends FormRequest
 {
@@ -14,15 +17,21 @@ class ExecutionRequest extends FormRequest
 
     public function rules(): array
     {
-        return $this->getActionValidation();
+        return [
+            'service' => ['bail', 'string', 'required', Rule::in(ServiceEnum::values())],
+            'action' => ['string', 'required', Rule::in(ActionEnum::values())],
+            'instructions' => ['array', 'present'],
+
+            ...$this->getActionValidation(),
+        ];
     }
 
     private function getActionValidation(): array
     {
         return $this->route('module')
             ->getModuleAcessorService()
-            ->getService($this->input('service'))
-            ->getAction($this->input('action'))
-            ->getValidationRules($this->route('tenant'));
+            ?->getService($this->input('service'))
+            ?->getAction($this->input('action'))
+            ?->getValidationRules($this->route('tenant')) ?? [];
     }
 }

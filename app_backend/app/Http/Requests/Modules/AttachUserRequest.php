@@ -17,7 +17,7 @@ class AttachUserRequest extends FormRequest
             'members.*' => ['required', 'array'],
             'members.*.user_id' => [
                 'required_without:members.*.email',
-                'integer',
+                'string',
                 'exists:users,id',
                 new UserIsAttachedToTenant($this->route('tenant')),
             ],

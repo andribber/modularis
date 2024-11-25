@@ -53,7 +53,7 @@ $router->name('v1.')->group(function (Router $router) use ($loginLimiter) {
                 $router->group(['prefix' => '/modules'], function (Router $router) {
                     $router->get('/', [ModuleController::class, 'index'])->name('tenants.modules.index');
                     $router->post('/contract', [ModuleController::class, 'contract'])->name('tenants.modules.contract');
-                    
+
                     $router->group(['prefix' => '/{module}'], function (Router $router) {
                         $router->get('/', [ModuleController::class, 'show'])->name('tenants.modules.show');
                         $router->post('/attach-users', [ModuleController::class, 'attachUsers'])
