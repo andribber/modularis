@@ -2,11 +2,8 @@
 
 namespace App\Services\Modules\Employees\Services\Employee\Actions;
 
-use App\Enums\ActionEnum;
-use App\Enums\ServiceEnum;
 use App\Models\Tenant;
 use App\Services\Modules\Interfaces\Action;
-use Illuminate\Validation\Rule;
 
 class Create implements Action
 {
@@ -18,9 +15,6 @@ class Create implements Action
     public function getValidationRules(Tenant $tenant): array
     {
         return [
-            'service' => ['string', 'required', Rule::in([ServiceEnum::EMPLOYEE->value])],
-            'action' => ['string', 'required', Rule::in([ActionEnum::CREATE->value])],
-            'instructions' => ['array', 'required'],
             'instructions.name' => ['required', 'string', 'max:255'],
             'instructions.email' => ['required', 'email'],
             'instructions.occupation' => ['required', 'string', 'max:255'],

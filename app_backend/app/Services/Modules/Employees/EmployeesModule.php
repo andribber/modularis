@@ -13,8 +13,8 @@ use Illuminate\Database\Eloquent\Model;
 class EmployeesModule extends ModuleContract
 {
     public function __construct(
-        private Employee $employee,
-        private Team $team,
+        private readonly Employee $employee,
+        private readonly Team $team,
     ) {
     }
 
@@ -23,11 +23,12 @@ class EmployeesModule extends ModuleContract
         return Module::where('class', self::class)->first();
     }
 
-    public function getService(string $service): Service
+    public function getService(?string $service): ?Service
     {
         return match ($service) {
             ServiceEnum::EMPLOYEE->value => $this->employee,
             ServiceEnum::TEAM->value => $this->team,
+            default => null
         };
     }
 

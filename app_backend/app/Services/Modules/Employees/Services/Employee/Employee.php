@@ -14,15 +14,15 @@ use App\Services\Modules\Interfaces\Service;
 class Employee implements Service
 {
     public function __construct(
-        private Create $create,
-        private Delete $delete,
-        private Edit $edit,
-        private Index $index,
-        private Show $show,
+        private readonly Create $create,
+        private readonly Delete $delete,
+        private readonly Edit $edit,
+        private readonly Index $index,
+        private readonly Show $show,
     ) {
     }
 
-    public function getAction(string $action): Action
+    public function getAction(?string $action): ?Action
     {
         return match ($action) {
             ActionEnum::CREATE->value => $this->create,
@@ -30,6 +30,7 @@ class Employee implements Service
             ActionEnum::EDIT->value => $this->edit,
             ActionEnum::SHOW->value => $this->show,
             ActionEnum::INDEX->value => $this->index,
+            default => null
         };
     }
 }

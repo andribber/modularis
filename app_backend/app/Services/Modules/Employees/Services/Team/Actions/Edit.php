@@ -25,7 +25,7 @@ class Edit implements Action
 
         $team->update($parameters);
 
-        return $team;
+        return $team->refresh();
     }
 
     public function getValidationRules(Tenant $tenant): array

@@ -2,20 +2,11 @@
 
 namespace App\Services\Modules\Employees\Services\Employee\Actions;
 
-use App\Enums\ActionEnum;
-use App\Enums\ServiceEnum;
-use App\Models\ModuleServices\Employees\Employee;
 use App\Models\Tenant;
 use App\Services\Modules\Interfaces\Action;
-use Illuminate\Validation\Rule;
 
 class Edit implements Action
 {
-    public function __construct(
-        private readonly Employee $employee,
-    ) {
-    }
-
     public function run(Tenant $tenant, array $parameters): mixed
     {
         $employeeId = $parameters['employee_id'];
@@ -24,15 +15,12 @@ class Edit implements Action
         $employee = $tenant->employees()->where('id', $employeeId)->first();
         $employee->update($parameters);
 
-        return $employee;
+        return $employee->refersh();
     }
 
     public function getValidationRules(Tenant $tenant): array
     {
         return [
-            'service' => ['string', 'required', Rule::in([ServiceEnum::EMPLOYEE->value])],
-            'action' => ['string', 'required', Rule::in([ActionEnum::EDIT->value])],
-            'instructions' => ['array', 'required'],
             'instructions.employee_id' => ['required', 'string', 'exists:employees,id'],
             'instructions.name' => ['sometimes', 'string', 'max:255'],
             'instructions.email' => ['sometimes', 'email', 'unique:users,email'],

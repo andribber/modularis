@@ -9,8 +9,8 @@ use App\Services\Modules\Finantial\FinantialModule;
 class ModuleProxy
 {
     public function __construct(
-        private EmployeesModule $employee,
-        private FinantialModule $finantial,
+        private readonly EmployeesModule $employee,
+        private readonly FinantialModule $finantial,
     ) {
     }
 
