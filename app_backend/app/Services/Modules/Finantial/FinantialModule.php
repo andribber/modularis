@@ -2,6 +2,7 @@
 
 namespace App\Services\Modules\Finantial;
 
+use App\Enums\Module\Name;
 use App\Enums\ServiceEnum;
 use App\Models\Module as Module;
 use App\Services\Modules\Contracts\ModuleContract;
@@ -18,7 +19,7 @@ class FinantialModule extends ModuleContract
 
     public function getModel(): Model
     {
-        return Module::where('class', self::class)->first();
+        return Module::where('name', Name::FINANTIAL)->first();
     }
 
     public function getService(?string $service): ?Service

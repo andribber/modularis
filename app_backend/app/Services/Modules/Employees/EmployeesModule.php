@@ -2,6 +2,7 @@
 
 namespace App\Services\Modules\Employees;
 
+use App\Enums\Module\Name;
 use App\Enums\ServiceEnum;
 use App\Models\Module;
 use App\Services\Modules\Contracts\ModuleContract;
@@ -20,7 +21,7 @@ class EmployeesModule extends ModuleContract
 
     public function getModel(): Model
     {
-        return Module::where('class', self::class)->first();
+        return Module::where('name', Name::EMPLOYEES)->first();
     }
 
     public function getService(?string $service): ?Service
