@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Services\Modules\Employees\Services\Employee;
+namespace App\Services\Modules\Finantial\Services\Finantial;
 
 use App\Enums\ActionEnum;
-use App\Services\Modules\Employees\Services\Employee\Actions\Create;
-use App\Services\Modules\Employees\Services\Employee\Actions\Delete;
-use App\Services\Modules\Employees\Services\Employee\Actions\Edit;
-use App\Services\Modules\Employees\Services\Employee\Actions\Index;
-use App\Services\Modules\Employees\Services\Employee\Actions\Show;
+use App\Services\Modules\Finantial\Services\Finantial\Actions\Create;
+use App\Services\Modules\Finantial\Services\Finantial\Actions\Delete;
+use App\Services\Modules\Finantial\Services\Finantial\Actions\Edit;
+use App\Services\Modules\Finantial\Services\Finantial\Actions\Index;
+use App\Services\Modules\Finantial\Services\Finantial\Actions\Show;
 use App\Services\Modules\Interfaces\Action;
 use App\Services\Modules\Interfaces\Service;
 
-class Employee implements Service
+class Finantial implements Service
 {
     public function __construct(
         private readonly Create $create,
@@ -28,8 +28,8 @@ class Employee implements Service
             ActionEnum::CREATE->value => $this->create,
             ActionEnum::DELETE->value => $this->delete,
             ActionEnum::EDIT->value => $this->edit,
-            ActionEnum::SHOW->value => $this->show,
             ActionEnum::INDEX->value => $this->index,
+            ActionEnum::SHOW->value => $this->show,
             default => null
         };
     }

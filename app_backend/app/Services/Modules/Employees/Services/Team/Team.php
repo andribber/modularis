@@ -17,18 +17,18 @@ use App\Services\Modules\Interfaces\Service;
 class Team implements Service
 {
     public function __construct(
-        private AddUsers $addUsers,
-        private Create $create,
-        private Delete $delete,
-        private Edit $edit,
-        private GetUsers $getUsers,
-        private Index $index,
-        private RemoveUsers $removeUsers,
-        private Show $show,
+        private readonly AddUsers $addUsers,
+        private readonly Create $create,
+        private readonly Delete $delete,
+        private readonly Edit $edit,
+        private readonly GetUsers $getUsers,
+        private readonly Index $index,
+        private readonly RemoveUsers $removeUsers,
+        private readonly Show $show,
     ) {
     }
 
-    public function getAction(string $action): Action
+    public function getAction(?string $action): ?Action
     {
         return match ($action) {
             ActionEnum::ADD_USERS->value => $this->addUsers,
@@ -39,6 +39,7 @@ class Team implements Service
             ActionEnum::INDEX->value => $this->index,
             ActionEnum::REMOVE_USERS->value => $this->removeUsers,
             ActionEnum::SHOW->value => $this->show,
+            default => null,
         };
     }
 }

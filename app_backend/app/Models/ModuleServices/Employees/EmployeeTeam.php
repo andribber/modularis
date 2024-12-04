@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 class EmployeeTeam extends Pivot
 {
     protected $table = 'employee_team';
+    protected $keyType = 'string';
 
     protected $fillable = [
         'created_at',

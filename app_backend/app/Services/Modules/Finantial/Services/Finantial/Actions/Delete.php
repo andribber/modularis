@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Modules\Employees\Services\Employee\Actions;
+namespace App\Services\Modules\Finantial\Services\Finantial\Actions;
 
 use App\Models\Tenant;
 use App\Services\Modules\Interfaces\Action;
@@ -9,8 +9,8 @@ class Delete implements Action
 {
     public function run(Tenant $tenant, array $parameters): mixed
     {
-        $tenant->employees()
-            ->where('id', $parameters['employee_id'])
+        $tenant->finances()
+            ->where('id', $parameters['finance_id'])
             ->delete();
 
         return [];
@@ -19,7 +19,7 @@ class Delete implements Action
     public function getValidationRules(Tenant $tenant): array
     {
         return [
-            'instructions.employee_id' => ['required', 'string', 'exists:employees,id'],
+            'instructions.finance_id' => ['required', 'string', 'exists:finances,id'],
         ];
     }
 }

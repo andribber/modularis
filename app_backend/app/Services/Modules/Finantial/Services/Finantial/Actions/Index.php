@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Services\Modules\Finantial\Services\Expense\Actions;
+namespace App\Services\Modules\Finantial\Services\Finantial\Actions;
 
 use App\Models\Tenant;
 use App\Services\Modules\Interfaces\Action;
 
-class Create implements Action
+class Index implements Action
 {
     public function run(Tenant $tenant, array $parameters): mixed
     {
-        return [];
+        return $tenant->finances()->get();
     }
 
     public function getValidationRules(Tenant $tenant): array

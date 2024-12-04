@@ -18,7 +18,6 @@ class ContractRequest extends FormRequest
     public function validated($key = null, $default = null): mixed
     {
         $data = parent::validated();
-        $data['class'] = Name::resolveClass($data['name']);
 
         return data_get($data, $key, $default);
     }

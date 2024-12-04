@@ -12,9 +12,11 @@ class Delete implements Action
 {
     public function run(Tenant $tenant, array $parameters): mixed
     {
-        return $tenant->teams()
+        $tenant->teams()
             ->where('id', $parameters['team_id'])
             ->delete();
+
+        return [];
     }
 
     public function getValidationRules(Tenant $tenant): array

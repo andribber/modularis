@@ -39,7 +39,7 @@ abstract class ModuleContract
         return $this;
     }
 
-    abstract public function getService(string $service): Service;
-    abstract public function getModel(): Model;
+    abstract public function getService(string $service): ?Service;
+    abstract public function getModel(): ?Model;
     abstract protected function execute(array $parameters): mixed;
 }

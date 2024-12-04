@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\V1;
 
+use App\Enums\Module\Name;
 use App\Http\Controllers\Controller;
 use App\Http\Queries\ModuleQuery;
 use App\Http\Queries\ModuleUserQuery;
@@ -31,7 +32,7 @@ class ModuleController extends Controller
     public function index(Request $request, Tenant $tenant, ModuleQuery $query): JsonResource
     {
         $this->authorize('view', $tenant);
-        
+
         return ModuleResource::collection(
             $query->whereHas('tenants', fn (Builder $query) => $query->where('tenants.id', $tenant->id))
                 ->simplePaginate($request->get('limit', config('app.pagination_limit'))),
@@ -41,7 +42,7 @@ class ModuleController extends Controller
     public function show(Request $request, ModuleQuery $query, Tenant $tenant, Module $module): JsonResource
     {
         $this->authorize('view', $tenant);
-        
+
         return ModuleResource::make(
             $query->where('modules.id', $module->id)
                 ->whereHas('tenants', fn (Builder $query) => $query->where('tenants.id', $tenant->id))
@@ -54,7 +55,7 @@ class ModuleController extends Controller
         // não está funcionando
         // $this->authorize('contract', $tenant);
 
-        $class = $request->validated('class');
+        $class = Name::from($request->validated('name'))->className();
         $module = $this->moduleProxy->getModule($class);
 
         $tenant->modules()->attach($module->getModel()->id, ['expires_at' => now()->addMonth()]);

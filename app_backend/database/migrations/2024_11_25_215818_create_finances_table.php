@@ -8,12 +8,14 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('teams', function (Blueprint $table) {
-            $table->primaryUlid('tea');
+        Schema::create('finances', function (Blueprint $table) {
+            $table->primaryUlid('fin');
             $table->foreignPrefixedUlid('tenant_id')->references('id')->on('tenants')->onDelete('cascade');
-            $table->foreignPrefixedUlid('leader_id')->references('id')->on('employees')->onDelete('cascade');
-            $table->string('name');
+            $table->foreignPrefixedUlid('operator_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignPrefixedUlid('user_id')->nullable()->references('id')->on('users')->onDelete('cascade');
             $table->string('description');
+            $table->string('amount');
+            $table->string('type');
 
             $table->timestamps();
             $table->softDeletes();
@@ -22,6 +24,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('teams');
+        Schema::dropIfExists('finances');
     }
 };

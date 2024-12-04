@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Events\User\Created;
+use App\Models\ModuleServices\Finances\Finantial;
 use App\Traits\InteractsWithObject;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -73,6 +74,16 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
             'id',
             'id',
         );
+    }
+
+    public function finances(): HasMany
+    {
+        return $this->hasMany(Finantial::class);
+    }
+
+    public function operatedFinances(): HasMany
+    {
+        return $this->hasMany(Finantial::class, 'operator_id');
     }
 
     public function getJWTIdentifier(): string
