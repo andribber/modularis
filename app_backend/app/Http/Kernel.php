@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\Authenticate;
+use App\Http\Middleware\Cors;
 use App\Http\Middleware\ForceJsonResponse;
 use App\Http\Middleware\NoopMiddleware;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
@@ -38,6 +39,7 @@ class Kernel extends HttpKernel
         ValidatePostSize::class,
         TrimStrings::class,
         ConvertEmptyStringsToNull::class,
+        Cors::class,
     ];
 
     /**
