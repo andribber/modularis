@@ -9,6 +9,11 @@ class ModuleUser extends Pivot
 {
     protected $table = 'module_user';
 
+    protected $casts = [
+        'created_at' => 'timestamp',
+        'updated_at' => 'timestamp',
+    ];
+
     protected $fillable = [
         'role',
         'created_at',
