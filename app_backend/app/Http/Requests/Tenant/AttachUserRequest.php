@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Tenant;
 
-use App\Enums\Tenant\Role;
+use App\Enums\Module\ModuleRoles;
 use App\Models\User;
-use App\Rules\UserIsntAttachedToTenant;
+use App\Rules\UserIsAttachedToTenant;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -17,17 +17,17 @@ class AttachUserRequest extends FormRequest
             'members.*' => ['required', 'array'],
             'members.*.user_id' => [
                 'required_without:members.*.email',
-                'integer',
+                'string',
                 'exists:users,id',
-                new UserIsntAttachedToTenant($this->route('tenant')),
+                new UserIsAttachedToTenant($this->route('tenant')),
             ],
             'members.*.email' => [
                 'required_without:members.*.user_id',
                 'email',
                 'exists:users,email',
-                new UserIsntAttachedToTenant($this->route('tenant')),
+                new UserIsAttachedToTenant($this->route('tenant')),
             ],
-            'members.*.role' => ['required', Rule::in(Role::assignableRoles(true))],
+            'members.*.role' => ['required', Rule::in(ModuleRoles::values())],
         ];
     }
 

@@ -10,6 +10,12 @@ class ModuleTenant extends Pivot
     protected $table = 'module_tenant';
     protected $keyType = 'string';
 
+    protected $casts = [
+        'created_at' => 'timestamp',
+        'expires_at' => 'timestamp',
+        'updated_at' => 'timestamp',
+    ];
+
     protected $fillable = [
         'expires_at',
         'created_at',
