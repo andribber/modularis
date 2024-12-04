@@ -14,11 +14,9 @@ class ModuleSeeder extends Seeder
         $modules = Module::factory()->createMany([
             [
                 'name' => Name::EMPLOYEES,
-                'class' => Name::EMPLOYEES->className(),
             ],
             [
                 'name' => Name::FINANTIAL,
-                'class' => Name::FINANTIAL->className(),
             ],
         ]);
 

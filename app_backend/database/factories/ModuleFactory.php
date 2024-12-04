@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Services\Modules\Employees\EmployeesModule;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ModuleFactory extends Factory
@@ -11,7 +10,6 @@ class ModuleFactory extends Factory
     {
         return [
             'name' => 'Employees',
-            'class' => EmployeesModule::class,
         ];
     }
 }
