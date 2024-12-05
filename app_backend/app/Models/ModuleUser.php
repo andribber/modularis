@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Module\ModuleRoles;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
@@ -11,6 +12,7 @@ class ModuleUser extends Pivot
 
     protected $casts = [
         'created_at' => 'timestamp',
+        'role' => ModuleRoles::class,
         'updated_at' => 'timestamp',
     ];
 
