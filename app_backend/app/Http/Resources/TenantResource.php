@@ -11,11 +11,11 @@ class TenantResource extends JsonResource
     {
         $appends = [];
 
-        if (Str::contains($request->input('appends'), 'me')) {
+        if (Str::contains($request->input('append'), 'me')) {
             $appends['me'] = new UserResource(auth()->user());
         }
 
-        if (Str::contains($request->input('appends'), 'owner')) {
+        if (Str::contains($request->input('append'), 'owner')) {
             $appends['owner'] = new UserResource($this->responsible);
         }
 

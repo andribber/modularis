@@ -13,9 +13,10 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'email_verified_at' => $this->email_verified_at,
             'id' => $this->id,
-            'name' => $this->name,
-            'updated_at' => $this->updated_at,
             'modules' => $this->whenLoaded('modules', ModuleResource::collection($this->modules)),
+            'name' => $this->name,
+            'role' => $this->tenants()->find(auth()->payload()->get('tenant_id'))->pivot->role,
+            'updated_at' => $this->updated_at,
         ];
     }
 }
