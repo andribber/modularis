@@ -20,7 +20,7 @@ class UserIsAttachedToTenant implements ValidationRule
             Str::contains($attribute, 'email') => 'users.email',
         };
 
-        if ($this->tenant->users()->where($field, $value)->exists()) {
+        if ($this->tenant->users()->where($field, $value)->doesntExist()) {
             $fail(__('validation.exists'));
         }
     }
