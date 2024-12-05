@@ -15,7 +15,7 @@ class Edit implements Action
         $employee = $tenant->employees()->where('id', $employeeId)->first();
         $employee->update($parameters);
 
-        return $employee->refersh();
+        return $employee->refresh();
     }
 
     public function getValidationRules(Tenant $tenant): array

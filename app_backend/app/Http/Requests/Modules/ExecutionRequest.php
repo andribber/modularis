@@ -19,7 +19,7 @@ class ExecutionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'service' => ['bail', 'string', 'required', Rule::in($this->route('module')->name->availableSerices())],
+            'service' => ['bail', 'string', 'required', Rule::in($this->route('module')->name->availableServices())],
             'action' => ['string', 'required', Rule::in(ActionEnum::values())],
             'instructions' => ['array', 'present'],
 
