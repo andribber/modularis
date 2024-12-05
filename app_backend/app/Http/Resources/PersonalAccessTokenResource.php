@@ -13,6 +13,7 @@ class PersonalAccessTokenResource extends JsonResource
             'expires_at' => $this->expires_at,
             'id' => $this->id,
             'name' => $this->name,
+            'role' => $this->tenantUser->role,
             'tenant_user_id' => $this->when(
                 ! $this->resource->relationLoaded('tenant_user'),
                 $this->tenant_user_id,

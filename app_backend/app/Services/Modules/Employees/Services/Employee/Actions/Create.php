@@ -18,7 +18,7 @@ class Create implements Action
             'instructions.name' => ['required', 'string', 'max:255'],
             'instructions.email' => ['required', 'email'],
             'instructions.occupation' => ['required', 'string', 'max:255'],
-            'instructions.salary' => ['required', 'string'],
+            'instructions.salary' => ['required', 'decimal:2'],
             'instructions.team_id' => ['sometimes', 'string', 'exists:teams,id'], //teams feature
             'instructions.registry' => ['required', 'string', 'unique:employees,registry'],
             'instructions.bank_account' => ['required', 'array'],
