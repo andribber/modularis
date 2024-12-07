@@ -56,7 +56,10 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 
     public function modules(): BelongsToMany
     {
-        return $this->belongsToMany(Module::class);
+        return $this->belongsToMany(Module::class)
+            ->using(ModuleUser::class)
+            ->withTimestamps()
+            ->pivot('role');
     }
 
     public function moduleUser(): HasMany
