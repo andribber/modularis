@@ -25,7 +25,6 @@ class Employee extends Model
         'email',
         'occupation',
         'salary',
-        'team_id',
         'registry',
         'bank_account',
     ];
@@ -52,7 +51,9 @@ class Employee extends Model
 
     public function teams(): BelongsToMany
     {
-        return $this->belongsToMany(Team::class);
+        return $this->belongsToMany(Team::class)
+            ->using(EmployeeTeam::class)
+            ->withTimestamps();
     }
 
     public function ledTeams(): HasMany
