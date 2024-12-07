@@ -5,6 +5,7 @@ namespace App\Listeners\Employees\Created;
 use App\Enums\Tenant\Role;
 use App\Events\Employees\Created;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class CreateUser
 {
@@ -17,7 +18,7 @@ class CreateUser
             [
                 'name' => $employee->name,
                 'email' => $employee->email,
-                'password' => '123',
+                'password' => Hash::make('password'),
             ],
         );
 
