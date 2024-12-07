@@ -2,10 +2,12 @@
 
 namespace App\Services\Modules\Finantial\Services\Finantial\Actions;
 
+use App\Enums\Module\Finances\Status;
 use App\Enums\Module\Finances\Type;
 use App\Models\Tenant;
 use App\Rules\UserIsAttachedToTenant;
 use App\Services\Modules\Interfaces\Action;
+use Illuminate\Validation\Rule;
 
 class Create implements Action
 {
@@ -13,7 +15,6 @@ class Create implements Action
     {
         return $tenant->finances()->create([
             'operator_id' => auth()->user()->id,
-            'type' => Type::ADJUST,
             ...$parameters,
         ]);
     }
@@ -23,6 +24,8 @@ class Create implements Action
         return [
             'instructions.amount' => ['required', 'decimal:2'],
             'instructions.description' => ['required', 'string', 'max:255'],
+            'instructions.status' => ['required', 'string', Rule::in(Status::values())],
+            'instructions.type' => ['required', 'string', Rule::in(Type::values())],
             'instructions.user_id' => [
                 'nullable',
                 'string',

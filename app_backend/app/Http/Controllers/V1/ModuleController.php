@@ -26,14 +26,16 @@ class ModuleController extends Controller
 {
     use AuthorizesRequests;
 
-    public function __construct(private readonly ModuleProxy $moduleProxy) {}
+    public function __construct(private readonly ModuleProxy $moduleProxy)
+    {
+    }
 
     public function index(Request $request, Tenant $tenant, ModuleQuery $query): JsonResource
     {
         $this->authorize('view', $tenant);
 
         return ModuleResource::collection(
-            $query->whereHas('tenants', fn(Builder $query) => $query->where('tenants.id', $tenant->id))
+            $query->whereHas('tenants', fn (Builder $query) => $query->where('tenants.id', $tenant->id))
                 ->simplePaginate($request->get('limit', config('app.pagination_limit'))),
         );
     }
@@ -44,7 +46,7 @@ class ModuleController extends Controller
 
         return ModuleResource::make(
             $query->where('modules.id', $module->id)
-                ->whereHas('tenants', fn(Builder $query) => $query->where('tenants.id', $tenant->id))
+                ->whereHas('tenants', fn (Builder $query) => $query->where('tenants.id', $tenant->id))
                 ->first(),
         );
     }

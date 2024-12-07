@@ -9,5 +9,6 @@ enum Type: string
     use Values;
 
     case ADJUST = 'adjust';
-    case PAYMENT = 'payment';
+    case INCOME = 'income';
+    case EXPENSE = 'expense';
 }

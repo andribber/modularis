@@ -2,6 +2,7 @@
 
 namespace App\Models\ModuleServices\Finances;
 
+use App\Enums\Module\Finances\Status;
 use App\Enums\Module\Finances\Type;
 use App\Events\Finances\Created;
 use App\Models\Tenant;
@@ -21,6 +22,7 @@ class Finantial extends Model
         'amount',
         'description',
         'operator_id',
+        'status',
         'tenant_id',
         'type',
         'user_id',
@@ -28,6 +30,7 @@ class Finantial extends Model
 
     protected $casts = [
         'created_at' => 'timestamp',
+        'status' => Status::class,
         'type' => Type::class,
         'updated_at' => 'timestamp',
     ];
