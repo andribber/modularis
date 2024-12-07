@@ -26,16 +26,14 @@ class ModuleController extends Controller
 {
     use AuthorizesRequests;
 
-    public function __construct(private readonly ModuleProxy $moduleProxy)
-    {
-    }
+    public function __construct(private readonly ModuleProxy $moduleProxy) {}
 
     public function index(Request $request, Tenant $tenant, ModuleQuery $query): JsonResource
     {
         $this->authorize('view', $tenant);
 
         return ModuleResource::collection(
-            $query->whereHas('tenants', fn (Builder $query) => $query->where('tenants.id', $tenant->id))
+            $query->whereHas('tenants', fn(Builder $query) => $query->where('tenants.id', $tenant->id))
                 ->simplePaginate($request->get('limit', config('app.pagination_limit'))),
         );
     }
@@ -46,7 +44,7 @@ class ModuleController extends Controller
 
         return ModuleResource::make(
             $query->where('modules.id', $module->id)
-                ->whereHas('tenants', fn (Builder $query) => $query->where('tenants.id', $tenant->id))
+                ->whereHas('tenants', fn(Builder $query) => $query->where('tenants.id', $tenant->id))
                 ->first(),
         );
     }
@@ -76,7 +74,14 @@ class ModuleController extends Controller
 
         foreach ($request->validated('members') as $member) {
             $userIds[] = $member['user_id'];
-            $module->users()->attach($member['user_id'], ['role' => $member['role']]);
+
+            if ($module->users()->wherePivot('user_id', $member['user_id'])->doesntExist()) {
+                $module->users()->attach($member['user_id'], [
+                    'role' => $member['role'],
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
         }
 
         return ModuleUserResource::collection(
