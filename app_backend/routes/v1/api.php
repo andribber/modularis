@@ -58,6 +58,8 @@ $router->name('v1.')->group(function (Router $router) use ($loginLimiter) {
                         $router->get('/', [ModuleController::class, 'show'])->name('tenants.modules.show');
                         $router->post('/attach-users', [ModuleController::class, 'attachUsers'])
                             ->name('tenants.modules.attach-users');
+                        $router->post('/detach-users', [ModuleController::class, 'detachUsers'])
+                            ->name('tenants.modules.detach-users');
 
                         $router->post('/execute', ExecutionController::class)->name('tenants.modules.execute');
                     });
