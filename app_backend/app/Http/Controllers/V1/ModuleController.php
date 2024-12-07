@@ -8,6 +8,7 @@ use App\Http\Queries\ModuleQuery;
 use App\Http\Queries\ModuleUserQuery;
 use App\Http\Requests\Modules\AttachUserRequest;
 use App\Http\Requests\Modules\ContractRequest;
+use App\Http\Requests\Modules\DetachUserRequest;
 use App\Http\Resources\ModuleResource;
 use App\Http\Resources\ModuleUserResource;
 use App\Models\Module;
@@ -86,5 +87,29 @@ class ModuleController extends Controller
         )
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
+    }
+
+    public function detachUsers(
+        DetachUserRequest $request,
+        ModuleUserQuery $query,
+        Tenant $tenant,
+        Module $module,
+    ): JsonResponse {
+        $this->authorize('detach', [ModuleTenant::class, $tenant, $module]);
+
+        $userIds = [];
+
+        foreach ($request->validated('members') as $member) {
+            $userIds[] = $member['user_id'];
+            $module->users()->detach($member['user_id']);
+        }
+
+        return ModuleUserResource::collection(
+            $query->where('module_id', $module->id)
+                ->whereIn('user_id', $userIds)
+                ->simplePaginate($request->get('limit', config('app.pagination_limit')))
+                ->appends($request->query()),
+        )
+            ->response();
     }
 }
