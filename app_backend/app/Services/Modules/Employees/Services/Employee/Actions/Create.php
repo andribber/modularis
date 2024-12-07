@@ -9,7 +9,16 @@ class Create implements Action
 {
     public function run(Tenant $tenant, array $parameters): mixed
     {
-        return $tenant->employees()->create($parameters);
+        $teams = $parameters['teams'] ?? [];
+        unset($parameters['employee_id'], $parameters['teams']);
+
+        $employee = $tenant->employees()->create($parameters);
+
+        foreach ($teams as $teamId) {
+            $employee->teams()->attach($teamId);
+        }
+
+        return $employee->load('teams');
     }
 
     public function getValidationRules(Tenant $tenant): array
@@ -19,12 +28,13 @@ class Create implements Action
             'instructions.email' => ['required', 'email'],
             'instructions.occupation' => ['required', 'string', 'max:255'],
             'instructions.salary' => ['required', 'decimal:2'],
-            'instructions.team_id' => ['sometimes', 'string', 'exists:teams,id'], //teams feature
             'instructions.registry' => ['required', 'string', 'unique:employees,registry'],
             'instructions.bank_account' => ['required', 'array'],
             'instructions.bank_account.bank_name' => ['required', 'string'],
             'instructions.bank_account.account' => ['required', 'string'],
             'instructions.bank_account.bank_code' => ['required', 'string'],
+            'instructions.teams' => ['sometimes', 'array'],
+            'instructions.teams.*.team_id' => ['sometimes', 'string', 'exists:teams,id'],
         ];
     }
 }

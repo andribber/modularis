@@ -10,10 +10,20 @@ class Edit implements Action
     public function run(Tenant $tenant, array $parameters): mixed
     {
         $employeeId = $parameters['employee_id'];
-        unset($parameters['employee_id']);
+        $teams = $parameters['teams'] ?? [];
+        unset($parameters['employee_id'], $parameters['teams']);
 
         $employee = $tenant->employees()->where('id', $employeeId)->first();
+
+        if ($teams !== []) {
+            $employee->teams()->sync([]);
+        }
+
         $employee->update($parameters);
+
+        foreach ($teams as $teamId) {
+            $employee->teams()->attach($teamId);
+        }
 
         return $employee->refresh();
     }
@@ -26,12 +36,13 @@ class Edit implements Action
             'instructions.email' => ['sometimes', 'email', 'unique:users,email'],
             'instructions.occupation' => ['sometimes', 'string', 'max:255'],
             'instructions.salary' => ['sometimes', 'string'],
-            'instructions.area' => ['sometimes', 'string'], //teams feature
             'instructions.registry' => ['sometimes', 'string'],
             'instructions.bank_account' => ['sometimes', 'array'],
             'instructions.bank_account.bank_name' => ['sometimes', 'string'],
             'instructions.bank_account.account' => ['sometimes', 'string'],
             'instructions.bank_account.bank_code' => ['sometimes', 'string'],
+            'instructions.teams' => ['sometimes', 'array'],
+            'instructions.teams.*.team_id' => ['sometimes', 'string', 'exists:teams,id'],
         ];
     }
 }
