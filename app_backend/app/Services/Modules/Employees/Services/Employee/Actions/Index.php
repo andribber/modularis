@@ -9,7 +9,7 @@ class Index implements Action
 {
     public function run(Tenant $tenant, array $parameters): mixed
     {
-        return $tenant->employees()->get();
+        return $tenant->employees()->with('teams')->get();
     }
 
     public function getValidationRules(Tenant $tenant): array
