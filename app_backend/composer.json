@@ -15,6 +15,7 @@
         "laravel/horizon": "^5.29",
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^3.5",
+        "lucascudo/laravel-pt-br-localization": "^3.0",
         "namshi/jose": "^7.2",
         "spatie/laravel-query-builder": "^5.7",
         "tymon/jwt-auth": "^2.1"
