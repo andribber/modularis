@@ -15,7 +15,7 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'modules' => $this->whenLoaded('modules', ModuleResource::collection($this->modules)),
             'name' => $this->name,
-            'role' => $this->tenants()->find(auth()->payload()->get('tenant_id'))->pivot->role,
+            'role' => $this->tenants()->find(auth()->payload()->get('tenant_id'))?->pivot->role,
             'updated_at' => $this->updated_at,
         ];
     }

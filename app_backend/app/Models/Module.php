@@ -50,15 +50,21 @@ class Module extends Model
         return $this->hasMany(ModuleUser::class);
     }
 
-    public function canBeAccessedBy(User $user, Tenant $tenant): bool
+    public function canBeAccessedBy(User $user, Tenant $tenant, Module $module): bool
     {
         return $this->whereHas(
             'moduleUser',
-            fn (Builder $query) => $query->whereBelongsTo($user)->whereIn('module_user.role', ModuleRoles::values()),
+            fn (Builder $query) => $query
+                ->whereBelongsTo($user)
+                ->whereBelongsTo($module)
+                ->whereIn('module_user.role', ModuleRoles::values()),
         )
             ->whereHas(
                 'moduleTenant',
-                fn (Builder $query) => $query->whereBelongsTo($tenant)->where('module_tenant.expires_at', '>=', now()),
+                fn (Builder $query) => $query
+                    ->whereBelongsTo($tenant)
+                    ->whereBelongsTo($module)
+                    ->where('module_tenant.expires_at', '>=', now()),
             )
             ->exists();
     }
