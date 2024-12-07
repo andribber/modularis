@@ -21,7 +21,7 @@ class ModuleTenantPolicy
             && ($tenant->isOwner($user)
                 || $tenant->isPersonal($user)
                 || $tenant->isAdmin($user)
-                || $module->canBeAccessedBy($user, $tenant));
+                || $module->canBeAccessedBy($user, $tenant, $module));
     }
 
     public function detach(User $user, Tenant $tenant, Module $module)
