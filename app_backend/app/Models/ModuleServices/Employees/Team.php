@@ -27,6 +27,10 @@ class Team extends Model
         'updated_at' => 'timestamp',
     ];
 
+    protected $dispatchesEvents = [
+        'created' => Created::class,
+    ];
+
     public function tenant(): BelongsTo
     {
         return $this->belongsTo(Tenant::class);
