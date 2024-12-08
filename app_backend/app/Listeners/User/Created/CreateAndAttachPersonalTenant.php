@@ -12,7 +12,7 @@ class CreateAndAttachPersonalTenant
     {
         $user = $event->user;
 
-        $tenant = Tenant::create(['name' => $user->name]);
+        $tenant = Tenant::create(['name' => "Organização de {$user->name}"]);
         $user->tenants()->attach($tenant, ['role' => Role::PERSONAL]);
     }
 }
