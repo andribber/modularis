@@ -9,9 +9,12 @@ class Delete implements Action
 {
     public function run(Tenant $tenant, array $parameters): mixed
     {
-        $tenant->employees()
+        $employee = $tenant->employees()
             ->where('id', $parameters['employee_id'])
-            ->delete();
+            ->first();
+
+        $employee->user()->delete();
+        $employee->delete();
 
         return [];
     }
