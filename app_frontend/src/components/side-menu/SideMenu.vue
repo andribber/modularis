@@ -17,17 +17,34 @@
   import ChevronIcon from '../../icons/ChevronIcon.vue';
   import EmptyTenant from '../../assets/empty-tenant.png';
 
-  import { useTenantStore, useFlowStore, useModuleStore } from '../../store';
+  import { useTenantStore, useFlowStore, useModuleStore, useUserStore } from '../../store';
 
   const router = useRouter();
   const tenantStore = useTenantStore();
   const moduleStore = useModuleStore();
+  const userStore = useUserStore();
   const flowStore = useFlowStore();
   const toast = useToast();
 
   // tenant
 
   const organizationName = computed(() => tenantStore.tenant?.name);
+
+  const tenantTranslations = {
+    viewer: 'Visualizador',
+    admin: 'Administrador',
+    owner: 'Dono',
+    personal: 'Pessoal',
+    operator: 'Operador',
+  }
+
+  const getRole = computed(() => {
+    if (userStore.user?.role) {
+      return tenantTranslations[userStore.user.role];
+    }
+
+    return '';
+  })
 
   // Menu options
 
@@ -86,6 +103,7 @@
     flowStore.setAppRequestPending(true);
     closeTenantModal();
     await tenantStore.changeTenant({ tenant });
+    await userStore.fetchUser();
     await moduleStore.fetchModules({ tenant_id: tenant.id });
     router.push('/dashboard');
     flowStore.setAppRequestPending(false);
@@ -119,6 +137,7 @@
     closeDeleteTenantModal();
     const current_tenant_id = tenantStore.tenant.id;
     await tenantStore.changeTenant({ tenant: tenantStore.tenants[tenantStore.tenants.length - 1] });
+    await userStore.fetchUser();
     await tenantStore.deleteTenant({ tenant_id: current_tenant_id });
     flowStore.setAppRequestPending(false);
   }
@@ -194,7 +213,7 @@
           </div>
 
           <span class="role-text">
-            Admin
+            {{ getRole }}
           </span>
         </div>
       </div>
