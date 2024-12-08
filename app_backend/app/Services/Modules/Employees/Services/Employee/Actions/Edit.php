@@ -25,7 +25,7 @@ class Edit implements Action
             $employee->teams()->attach($teamId);
         }
 
-        return $employee->refresh();
+        return $employee->refresh()->load('teams');
     }
 
     public function getValidationRules(Tenant $tenant): array
