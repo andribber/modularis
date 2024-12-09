@@ -19,13 +19,11 @@ class AttachUserRequest extends FormRequest
                 'required_without:members.*.email',
                 'string',
                 'exists:users,id',
-                new UserIsAttachedToTenant($this->route('tenant')),
             ],
             'members.*.email' => [
                 'required_without:members.*.user_id',
                 'email',
                 'exists:users,email',
-                new UserIsAttachedToTenant($this->route('tenant')),
             ],
             'members.*.role' => ['required', Rule::in(ModuleRoles::values())],
         ];
