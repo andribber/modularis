@@ -176,7 +176,7 @@
           Sua organização não possui registros
 
           <Button v-if="hasFinancialModule" size="small" @click="viewFinancials">Ver</Button>
-          <Button v-else size="small" @click="openContract('finantial', 'finantial')">Contratar</Button>
+          <Button v-else size="small" @click="openContract('finantial', 'finantial')">Contratar Módulo Financeiro</Button>
         </div>
       </div>
 

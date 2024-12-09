@@ -79,47 +79,50 @@
         body: { role: user.role.slug },
       }));
     }
-
-    if (user.finantial.length) {
-      actions.push(moduleStore.attachUser({
-        tenant_id: tenantStore.tenant.id,
-        module: getFinantialModule.value.id,
-        body: {
-          members: [{
-            user_id: user.user_id,
-            role: user.finantial_role.slug
-          }]
-        }
-      }));
-    } else {
-      actions.push(moduleStore.detachUser({
-        tenant_id: tenantStore.tenant.id,
-        module: getFinantialModule.value.id,
-        body: {
-          members: [{ user_id: user.user_id }]
-        }
-      }));
+    if(hasFinancialModule.value) {
+      if (user.finantial.length) {
+        actions.push(moduleStore.attachUser({
+          tenant_id: tenantStore.tenant.id,
+          module: getFinantialModule.value.id,
+          body: {
+            members: [{
+              user_id: user.user_id,
+              role: user.finantial_role.slug
+            }]
+          }
+        }));
+      } else {
+        actions.push(moduleStore.detachUser({
+          tenant_id: tenantStore.tenant.id,
+          module: getFinantialModule.value.id,
+          body: {
+            members: [{ user_id: user.user_id }]
+          }
+        }));
+      }
     }
-
-    if (user.employee.length) {
-      actions.push(moduleStore.attachUser({
-        tenant_id: tenantStore.tenant.id,
-        module: getEmployeesModule.value.id,
-        body: {
-          members: [{
-            user_id: user.user_id,
-            role: user.employee_role.slug
-          }]
-        }
-      }));
-    } else {
-      actions.push(moduleStore.detachUser({
-        tenant_id: tenantStore.tenant.id,
-        module: getEmployeesModule.value.id,
-        body: {
-          members: [{ user_id: user.user_id }]
-        }
-      }));
+    
+    if(hasEmployeeModule.value) {
+      if (user.employee.length) {
+        actions.push(moduleStore.attachUser({
+          tenant_id: tenantStore.tenant.id,
+          module: getEmployeesModule.value.id,
+          body: {
+            members: [{
+              user_id: user.user_id,
+              role: user.employee_role.slug
+            }]
+          }
+        }));
+      } else {
+        actions.push(moduleStore.detachUser({
+          tenant_id: tenantStore.tenant.id,
+          module: getEmployeesModule.value.id,
+          body: {
+            members: [{ user_id: user.user_id }]
+          }
+        }));
+      }
     }
 
     await Promise.allSettled(actions);
@@ -242,7 +245,7 @@
       <Column header="Financeiro">
         <template #body="slotProps">
           <div class="input-container">
-            <Checkbox :disabled="! hasFinancialModule" v-model="slotProps.data.finantial" :value="true" />
+            <Checkbox :disabled="! hasFinancialModule || ['owner', 'personal'].includes(slotProps.data.role_slug)" v-model="slotProps.data.finantial" :value="true" />
             <Select v-model="slotProps.data.finantial_role" :disabled="! slotProps.data.finantial.length" size="small" :options="moduleOptions" optionLabel="role" placeholder="Selecione" class="table-select" />
           </div>
         </template>
@@ -251,7 +254,7 @@
       <Column header="Colaboradores">
         <template #body="slotProps">
           <div class="input-container">
-            <Checkbox :disabled="! hasEmployeeModule" v-model="slotProps.data.employee" :value="true" />
+            <Checkbox :disabled="! hasEmployeeModule || ['owner', 'personal'].includes(slotProps.data.role_slug)" v-model="slotProps.data.employee" :value="true" />
             <Select v-model="slotProps.data.employee_role" :disabled="! slotProps.data.employee.length" size="small" :options="moduleOptions"  optionLabel="role" placeholder="Selecione" class="table-select" />
           </div>
         </template>

@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'name' => 'Another Local User',
-                'email' => 'b@a.com',
+                'email' => 'b@b.com',
             ],
         ]);
     }

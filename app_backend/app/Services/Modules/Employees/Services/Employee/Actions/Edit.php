@@ -23,6 +23,13 @@ class Edit implements Action
             $employee->teams()->attach($teamId);
         }
 
+        $user = $employee->user;
+
+        $user->update([
+            'name' => $parameters['name'] ?? $user->name,
+            'email' => $parameters['email'] ?? $user->email,
+        ]);
+
         return $employee->refresh()->load('teams');
     }
 
