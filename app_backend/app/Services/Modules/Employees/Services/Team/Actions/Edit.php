@@ -17,7 +17,10 @@ class Edit implements Action
 
         if (isset($parameters['leader_id'])) {
             $oldLeader = $team->leader_id;
-            $team->employees()->attach($parameters['leader_id']);
+
+            if(! $team->employees()->where('employees.id', $parameters['leader_id'])->exists()) {
+                $team->employees()->attach($parameters['leader_id']);
+            }
             $team->employees()->detach($oldLeader);
         }
 

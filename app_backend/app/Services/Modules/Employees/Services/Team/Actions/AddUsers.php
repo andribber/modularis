@@ -16,7 +16,9 @@ class AddUsers implements Action
         $team = $tenant->teams()->where('id', $parameters['team_id'])->first();
 
         foreach ($ids as $id) {
-            $team->employees()->attach($id);
+            if(! $team->employees()->where('employees.id', $id)->exists()) {
+                $team->employees()->attach($id);
+            }
         }
 
         return $team->load('employees');

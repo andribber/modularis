@@ -2,6 +2,7 @@
 
 namespace App\Models\ModuleServices\Employees;
 
+use App\Events\Teams\Created;
 use App\Models\Tenant;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

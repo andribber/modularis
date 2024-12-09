@@ -4,6 +4,7 @@ namespace App\Services\Modules\Employees\Services\Team\Actions;
 
 use App\Enums\ActionEnum;
 use App\Enums\ServiceEnum;
+use App\Models\ModuleServices\Employees\EmployeeTeam;
 use App\Models\Tenant;
 use App\Services\Modules\Interfaces\Action;
 use Illuminate\Validation\Rule;
@@ -15,6 +16,8 @@ class Delete implements Action
         $tenant->teams()
             ->where('id', $parameters['team_id'])
             ->delete();
+
+        EmployeeTeam::where('team_id', $parameters['team_id'])->delete();
 
         return [];
     }

@@ -120,7 +120,7 @@
           Sua organização não possui funcionários
 
           <Button v-if="hasEmployeeModule" size="small" @click="viewEmployees">Ver</Button>
-          <Button v-else size="small" @click="openContract('employees', 'employee')">Contratar</Button>
+          <Button v-else size="small" @click="openContract('employees', 'employee')">Contratar Módulo de Colaboradores</Button>
         </div>
       </div>
 
@@ -148,7 +148,7 @@
           Sua organização não possui times
 
           <Button v-if="hasEmployeeModule" size="small" @click="viewTeams">Ver</Button>
-          <Button v-else size="small" @click="openContract('employees', 'team')">Contratar</Button>
+          <Button v-else size="small" @click="openContract('employees', 'team')">Contratar Módulo de Colaboradores</Button>
         </div>
       </div>
 

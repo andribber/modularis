@@ -15,9 +15,7 @@ class Edit implements Action
 
         $employee = $tenant->employees()->where('id', $employeeId)->first();
 
-        if ($teams !== []) {
-            $employee->teams()->sync([]);
-        }
+        $employee->teams()->sync([]);
 
         $employee->update($parameters);
 

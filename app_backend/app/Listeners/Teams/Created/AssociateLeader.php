@@ -9,7 +9,10 @@ class AssociateLeader
     public function handle(Created $event): void
     {
         $team = $event->team;
+        $leader = $team->leader;
 
-        $team->employees()->attach($team->leader);
+        if(! $team->employees()->where('employees.id', $leader->id)->exists()) {
+            $team->employees()->attach($team->leader);
+        }
     }
 }
